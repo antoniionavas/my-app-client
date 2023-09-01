@@ -2,9 +2,14 @@ import { useState } from "react";
 import service from "../services/service.config"
 import { useNavigate } from "react-router-dom";
 
+
 function Signup() {
 
   const navigate = useNavigate()
+
+  const musicGenre = ["Bachata", "Country", "Flamenco", "Funk", "Góspel", "Hip hop", "Jazz", "Música Clásica", "Metal", "Pop", "Reggae", "Reggaetón", "Rock", "Salsa", "Techno"];
+  const typeOffer = ["Bailarín", "Cantante", "Músico"];
+
 
   const [username, setUsername] = useState("")
   const [email, setEmail] = useState("");
@@ -21,8 +26,17 @@ function Signup() {
   const handleEmailChange = (e) => setEmail(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
   const handleConfirmPasswordChange = (e) => setConfirmPassword(e.target.value);
-  const handleGenreChange = (e) => setGenre(e.target.value);
-  const handleOfferTypeChange = (e) => setOfferType(e.target.value);
+
+  const handleGenreChange = (e) => {
+    const selectedGenres = Array.from(e.target.selectedOptions, (option) => option.value);
+    setGenre(selectedGenres);
+  };
+
+  const handleOfferTypeChange = (e) => {
+    const selectedOfferTypes = Array.from(e.target.selectedOptions, (option) => option.value);
+    setOfferType(selectedOfferTypes);
+  };
+
   const handleDateBornChange = (e) => setDateBorn(e.target.value);
   const handleCityChange = (e) => setCity(e.target.value);
 
@@ -105,12 +119,19 @@ function Signup() {
         <br />
 
         <label>Género Musical:</label>
+
         <select
           type="text"
           name="genre"
           value={genre}
-          onChange={handleGenreChange}
-        />
+          multiple
+          onChange={handleGenreChange}>
+            {Object.values(musicGenre).map((eachGenre) => (
+          <option key={eachGenre} value={eachGenre}>
+            {eachGenre}
+          </option>
+            ))}
+        </select>
 
         <br />
 
@@ -119,14 +140,20 @@ function Signup() {
           type="text"
           name="offerType"
           value={offerType}
-          onChange={handleOfferTypeChange}
-        />
+          multiple
+          onChange={handleOfferTypeChange}>
+            {Object.values(typeOffer).map((eachOffer) => (
+          <option key={eachOffer} value={eachOffer}>
+            {eachOffer}
+          </option>
+        ))}
+        </select>
 
         <br />
 
         <label>Fecha Nacimiento:</label>
         <input
-          type="text"
+          type="date"
           name="dateborn"
           value={dateborn}
           onChange={handleDateBornChange}
