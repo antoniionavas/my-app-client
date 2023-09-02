@@ -50,7 +50,6 @@ function Signup() {
         username,
         email,
         password,
-        confirmPassword,
         genre,
         offerType,
         dateborn,
