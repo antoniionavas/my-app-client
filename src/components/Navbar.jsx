@@ -24,6 +24,9 @@ function NavBar() {
     ? (
         <>
           <Link to="/private">Página privada</Link>
+          <Link to="/user/bandFav">Bandas Fav</Link>
+          <Link to="/offer">Ofertas</Link>
+          <Link to="/user/:id/details">Mi Perfil</Link>
           <button onClick={handleLogOut}>Cerrar Sesión</button>
         </>     
       )
