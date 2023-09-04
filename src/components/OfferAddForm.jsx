@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import service from "../services/service.config";
 
 function OfferAddForm(props) {
+  const musicGenre = ["Bachata", "Country", "Flamenco", "Funk", "Góspel", "Hip hop", "Jazz", "Música Clásica", "Metal", "Pop", "Reggae", "Reggaetón", "Rock", "Salsa", "Techno"];
+  const typeOffer = ["Bailarín", "Cantante", "Músico"];
 
   const navigate = useNavigate()
 
@@ -15,8 +17,15 @@ function OfferAddForm(props) {
 
   const handleTitleChange = (e) => setTitle(e.target.value);
   const handleDescriptionChange = (e) => setDescription(e.target.value);
-  const handleGenreChange = (e) => setGenre(e.target.value);
-  const handleOfferTypeChange = (e) => setOfferType(e.target.value);
+  const handleGenreChange = (e) => {
+    const selectedGenres = Array.from(e.target.selectedOptions, (option) => option.value);
+    setGenre(selectedGenres);
+  };
+
+  const handleOfferTypeChange = (e) => {
+    const selectedOfferTypes = Array.from(e.target.selectedOptions, (option) => option.value);
+    setOfferType(selectedOfferTypes);
+  };
   const handleSalaryChange = (e) => setSalary(e.target.value);
   const handleFinalDateChange = (e) => setFinalDate(e.target.value);
 
@@ -39,7 +48,7 @@ function OfferAddForm(props) {
       <h3>Crear Oferta</h3>
 
       <form onSubmit={handleSubmit}>
-        <label htmlFor="title">Title</label>
+        <label>Title</label>
         <input
           type="text"
           name="title"
@@ -49,7 +58,7 @@ function OfferAddForm(props) {
 
         <br />
 
-        <label htmlFor="description">Description</label>
+        <label>Description</label>
         <input
           type="text"
           name="description"
@@ -59,7 +68,7 @@ function OfferAddForm(props) {
 
         <br />
 
-        <label htmlFor="salary">Salary</label>
+        <label>Salary</label>
         <input
           type="text"
           name="salary"
@@ -69,26 +78,40 @@ function OfferAddForm(props) {
 
         <br />
 
-        <label htmlFor="genre">Genre</label>
+        <label>Genre</label>
         <select
+          type="text"
           name="genre"
-          onChange={handleGenreChange}
           value={genre}
-        />
+          multiple
+          onChange={handleGenreChange}>
+            {Object.values(musicGenre).map((eachGenre) => (
+          <option key={eachGenre} value={eachGenre}>
+            {eachGenre}
+          </option>
+            ))}
+        </select>
 
         <br />
 
-        <label htmlFor="offerType">OfferType</label>
+        <label>OfferType</label>
         <select
+          type="text"
           name="offerType"
-          onChange={handleOfferTypeChange}
           value={offerType}
-        />
+          multiple
+          onChange={handleOfferTypeChange}>
+            {Object.values(typeOffer).map((eachOffer) => (
+          <option key={eachOffer} value={eachOffer}>
+            {eachOffer}
+          </option>
+        ))}
+        </select>
 
         <br />
 
 
-        <label htmlFor="finalDate">Final Offer Date</label>
+        <label>Final Offer Date</label>
         <input
           type="date"
           name="finalDate"

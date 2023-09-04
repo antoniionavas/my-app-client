@@ -40,7 +40,7 @@ function App() {
         {/* User Routes*/}
         <Route path="/list-users" element={<UserList />} />
         <Route path="/my-profile" element={<IsPrivate><UserDetails /></IsPrivate>} />
-        <Route path="/user/update" element={<IsPrivate><EditUser /></IsPrivate>} />
+        <Route path="/update" element={<IsPrivate><EditUser /></IsPrivate>} />
         <Route path="/user/bandFav" element={<IsPrivate><UserFavBand /></IsPrivate>} />
 
         {/* Offer Routes*/}

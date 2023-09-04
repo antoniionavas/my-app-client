@@ -73,7 +73,7 @@ function UserEdit() {
     <div>
       <h3>Editar Usuario</h3>
 
-      <form onSubmit={handleSubmit} enctype="multipart/form-data">
+      <form onSubmit={handleSubmit}>
         <label htmlFor="username">Name</label>
         <input
           type="text"

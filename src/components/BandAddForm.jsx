@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import service from "../services/service.config";
 
 function BandAddForm(props) {
+  
+  const musicGenre = ["Bachata", "Country", "Flamenco", "Funk", "Góspel", "Hip hop", "Jazz", "Música Clásica", "Metal", "Pop", "Reggae", "Reggaetón", "Rock", "Salsa", "Techno"];
 
   const navigate = useNavigate()
 
@@ -13,7 +15,10 @@ function BandAddForm(props) {
 
 
   const handleNameChange = (e) => setName(e.target.value);
-  const handleGenreChange = (e) => setGenre(e.target.value);
+  const handleGenreChange = (e) => {
+    const selectedGenres = Array.from(e.target.selectedOptions, (option) => option.value);
+    setGenre(selectedGenres);
+  };
   const handleCityChange = (e) => setCity(e.target.value);
   const handleFoundationDateChange = (e) => setFoundationDate(e.target.value);
 
@@ -46,7 +51,7 @@ function BandAddForm(props) {
 
         <br />
 
-        <label htmlFor="city">City</label>
+        <label>City</label>
         <input
           type="text"
           name="city"
@@ -56,17 +61,24 @@ function BandAddForm(props) {
 
         <br />
 
-        <label htmlFor="genre">Genre</label>
+        <label>Genre</label>
         <select
+          type="text"
           name="genre"
-          onChange={handleGenreChange}
           value={genre}
-        />
+          multiple
+          onChange={handleGenreChange}>
+            {Object.values(musicGenre).map((eachGenre) => (
+          <option key={eachGenre} value={eachGenre}>
+            {eachGenre}
+          </option>
+            ))}
+        </select>
 
         <br />
 
  
-        <label htmlFor="foundationDate">Foundation Band Date</label>
+        <label>Foundation Band Date</label>
         <input
           type="date"
           name="foundationDate"
