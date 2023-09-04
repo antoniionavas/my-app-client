@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import service from "../services/service.config.js";
 import { uploadImageService } from "../services/upload.services.js";
 
@@ -8,19 +8,19 @@ function UserEdit() {
   const musicGenre = ["Bachata", "Country", "Flamenco", "Funk", "Góspel", "Hip hop", "Jazz", "Música Clásica", "Metal", "Pop", "Reggae", "Reggaetón", "Rock", "Salsa", "Techno"];
   const typeOffer = ["Bailarín", "Cantante", "Músico"];
 
-  const params = useParams()
+
   const navigate = useNavigate()
 
   const [username, setUsername] = useState("");
   const [isUploading, setIsUploading] = useState(false);
-  const [profileImg, setProfileImg] = useState(null);
+  const [profileImg, setProfileImg] = useState("");
   const [genre, setGenre] = useState([]);
   const [offerType, setOfferType] = useState([]);
   const [city, setCity] = useState("");
   const [dateborn, setDateborn] = useState("");
 
   const handleImgUpload = async (event) => {
-    console.log("El archivo a actualizar es: ", e.target.files[0]);
+    console.log("El archivo a actualizar es: ", event.target.files[0]);
   
     if (!event.target.files[0]) {
       return;
@@ -65,8 +65,8 @@ function UserEdit() {
       console.log(response)
       setUsername(response.data.username)
       setProfileImg(response.data.profileImg)
-      setGenre(response.data.genre)
-      setOfferType(response.data.offerType)
+      setGenre(response.data.genre || [])
+      setOfferType(response.data.offerType || [])
       setCity(response.data.city)
       setDateborn(response.data.dateborn)
 
@@ -113,7 +113,6 @@ function UserEdit() {
           name="profileImg"
           disabled={isUploading}
           onChange={handleImgUpload}
-          value={profileImg}
         />
 
         <br />
