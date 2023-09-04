@@ -84,7 +84,7 @@ function UserEdit() {
         username, profileImg, genre, city, dateborn, offerType
       })
 
-      navigate("/user/my-profile")
+      navigate("/my-profile")
 
     } catch (error) {
       console.log(error)

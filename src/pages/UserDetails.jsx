@@ -32,16 +32,12 @@ function UserDetails() {
     }
   }
 
-  // const handleLogOut = () => {
-  //   localStorage.removeItem("authToken")
-  //   verifyToken() //verifica un token que no existe para reiniciar 
-  //   navigate("/login")
-  // }
-
   // const handleDelete = async () => {
   //   try {
+  //     localStorage.removeItem("authToken")
+  //     verifyToken() //verifica un token que no existe para reiniciar 
   //     await service.delete("/user/auto-delete")
-  //     handleLogOut()
+  //     navigate("/login")
   //   } catch (error) {
   //     console.log(error)
   //     navigate("/error")
