@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import service from "../services/service.config";
+import service from "../services/service.config.js";
+import { uploadImageService } from "../services/upload.services.js";
 
 function UserEdit() {
 
@@ -11,15 +12,37 @@ function UserEdit() {
   const navigate = useNavigate()
 
   const [username, setUsername] = useState("");
-  const [profileImg, setProfileImg] = useState("");
+  const [isUploading, setIsUploading] = useState(false);
+  const [profileImg, setProfileImg] = useState(null);
   const [genre, setGenre] = useState([]);
   const [offerType, setOfferType] = useState([]);
   const [city, setCity] = useState("");
   const [dateborn, setDateborn] = useState("");
 
+  const handleImgUpload = async (event) => {
+    console.log("El archivo a actualizar es: ", e.target.files[0]);
+  
+    if (!event.target.files[0]) {
+      return;
+    }
+  
+    setIsUploading(true); 
+  
+    const uploadData = new FormData(); 
+    uploadData.append("image", event.target.files[0]);
+  
+    try {
+      const response = await uploadImageService(uploadData);
+      setProfileImg(response.data.profileImg);
+      setIsUploading(false); 
+    } catch (error) {
+      navigate("/error");
+    }
+  };
+
 
   const handleUserNameChange = (e) => setUsername(e.target.value);
-  const handleProfileImgChange = (e) => setProfileImg(e.target.value);
+ 
   const handleGenreChange = (e) => {
     const selectedGenres = Array.from(e.target.selectedOptions, (option) => option.value);
     setGenre(selectedGenres);
@@ -85,11 +108,11 @@ function UserEdit() {
         <br />
 
         <label htmlFor="profileImg">Imagen de Perfil</label>
-        <img src={profileImg} width={150}/>
         <input
           type="file"
           name="profileImg"
-          onChange={handleProfileImgChange}
+          disabled={isUploading}
+          onChange={handleImgUpload}
           value={profileImg}
         />
 
