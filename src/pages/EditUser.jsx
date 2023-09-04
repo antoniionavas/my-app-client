@@ -4,6 +4,9 @@ import service from "../services/service.config";
 
 function UserEdit() {
 
+  const musicGenre = ["Bachata", "Country", "Flamenco", "Funk", "Góspel", "Hip hop", "Jazz", "Música Clásica", "Metal", "Pop", "Reggae", "Reggaetón", "Rock", "Salsa", "Techno"];
+  const typeOffer = ["Bailarín", "Cantante", "Músico"];
+
   const params = useParams()
   const navigate = useNavigate()
 
@@ -17,8 +20,15 @@ function UserEdit() {
 
   const handleUserNameChange = (e) => setUsername(e.target.value);
   const handleProfileImgChange = (e) => setProfileImg(e.target.value);
-  const handleGenreChange = (e) => setGenre(e.target.value);
-  const handleOfferTypeChange = (e) => setOfferType(e.target.value);
+  const handleGenreChange = (e) => {
+    const selectedGenres = Array.from(e.target.selectedOptions, (option) => option.value);
+    setGenre(selectedGenres);
+  };
+
+  const handleOfferTypeChange = (e) => {
+    const selectedOfferTypes = Array.from(e.target.selectedOptions, (option) => option.value);
+    setOfferType(selectedOfferTypes);
+  };
   const handleCityChange = (e) => setCity(e.target.value);
   const handleDatebornChange = (e) => setDateborn(e.target.value);
 
@@ -47,7 +57,7 @@ function UserEdit() {
     e.preventDefault();
     try {
       
-      await service.put("/user/edit-user", {
+      await service.put("/user/update", {
         username, profileImg, genre, city, dateborn, offerType
       })
 
@@ -63,7 +73,7 @@ function UserEdit() {
     <div>
       <h3>Editar Usuario</h3>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} enctype="multipart/form-data">
         <label htmlFor="username">Name</label>
         <input
           type="text"
@@ -75,6 +85,7 @@ function UserEdit() {
         <br />
 
         <label htmlFor="profileImg">Imagen de Perfil</label>
+        <img src={profileImg} width={150}/>
         <input
           type="file"
           name="profileImg"
@@ -96,19 +107,33 @@ function UserEdit() {
 
         <label htmlFor="genre">Genre</label>
         <select
+          type="text"
           name="genre"
-          onChange={handleGenreChange}
           value={genre}
-        />
+          multiple
+          onChange={handleGenreChange}>
+            {Object.values(musicGenre).map((eachGenre) => (
+          <option key={eachGenre} value={eachGenre}>
+            {eachGenre}
+          </option>
+            ))}
+        </select>
 
         <br />
 
         <label htmlFor="offerType">OfferType</label>
         <select
+          type="text"
           name="offerType"
-          onChange={handleOfferTypeChange}
           value={offerType}
-        />
+          multiple
+          onChange={handleOfferTypeChange}>
+            {Object.values(typeOffer).map((eachOffer) => (
+          <option key={eachOffer} value={eachOffer}>
+            {eachOffer}
+          </option>
+        ))}
+        </select>
 
         <br />
 

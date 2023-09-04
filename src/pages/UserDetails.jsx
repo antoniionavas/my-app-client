@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import service from "../services/service.config";
+import { format } from "date-fns"; //formatea la fecha
+// import { useContext } from 'react'
+// import { AuthContext } from '../context/auth.context'
 
 function UserDetails() {
 
+  // const {verifyToken} = useContext(AuthContext)
+  
   const [ userDetails, setUserDetails ] = useState()
  
   const params = useParams()
@@ -27,16 +32,21 @@ function UserDetails() {
     }
   }
 
-  const handleDelete = async () => {
-    try {
-      await service.delete("/user/auto-delete")
-      navigate("/login")
+  // const handleLogOut = () => {
+  //   localStorage.removeItem("authToken")
+  //   verifyToken() //verifica un token que no existe para reiniciar 
+  //   navigate("/login")
+  // }
 
-    } catch (error) {
-      console.log(error)
-      navigate("/error")
-    }
-  }
+  // const handleDelete = async () => {
+  //   try {
+  //     await service.delete("/user/auto-delete")
+  //     handleLogOut()
+  //   } catch (error) {
+  //     console.log(error)
+  //     navigate("/error")
+  //   }
+  // }
 
   if (userDetails === undefined) {
     return <h3>...buscando detalles del Usuario</h3>
@@ -52,11 +62,11 @@ function UserDetails() {
         <p>{userDetails.genre}</p>
         <img src={userDetails.profileImg} width={150}/>
         <p>{userDetails.city}</p>
-        <p>{userDetails.dateborn}</p>
+        <p>{format(new Date(userDetails.dateborn), "dd-MM-yyyy")}</p>
         <p>{userDetails.offerType}</p>
         
-        <button onClick={handleDelete}>Eliminar Cuenta</button>
-        <Link to={`/user/edit-user`}>
+        {/* <button onClick={handleDelete}>Eliminar Cuenta</button> */}
+        <Link to={"/update"}>
           <button>Ir a Editar Perfil</button>
         </Link>
       </div>

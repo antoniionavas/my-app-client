@@ -38,9 +38,9 @@ function App() {
         <Route path="/private" element={<IsPrivate><PrivateExample /></IsPrivate>} />
 
         {/* User Routes*/}
-        <Route path="/user" element={<UserList />} />
+        <Route path="/list-users" element={<UserList />} />
         <Route path="/my-profile" element={<IsPrivate><UserDetails /></IsPrivate>} />
-        <Route path="/user/edit-user" element={<IsPrivate><EditUser /></IsPrivate>} />
+        <Route path="/user/update" element={<IsPrivate><EditUser /></IsPrivate>} />
         <Route path="/user/bandFav" element={<IsPrivate><UserFavBand /></IsPrivate>} />
 
         {/* Offer Routes*/}
