@@ -28,7 +28,7 @@ function UserEdit() {
 
   const getData = async () => {
     try {
-      const response = await service.get(`/user/${params.id}`)
+      const response = await service.get("/user/my-profile")
       console.log(response)
       setUsername(response.data.username)
       setProfileImg(response.data.profileImg)
@@ -47,11 +47,11 @@ function UserEdit() {
     e.preventDefault();
     try {
       
-      await service.put(`/user/${params.id}`, {
+      await service.put("/user/edit-user", {
         username, profileImg, genre, city, dateborn, offerType
       })
 
-      navigate(`/user/${params.id}/details`)
+      navigate("/user/my-profile")
 
     } catch (error) {
       console.log(error)

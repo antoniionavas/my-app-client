@@ -5,22 +5,22 @@ import Navbar from './components/Navbar'
 import IsPrivate from './components/isPrivate'
 
 //paginas
-import PrivateExample from './pages/PrivateExample'
-import Error from './pages/Error'
-import NotFound from './pages/NotFound'
-import Home from './pages/Home'
-import Signup from './pages/Signup'
-import Login from './pages/Login'
-import EditUser from './pages/EditUser'
-import UserList from './pages/UserList'
-import UserFavBand from './pages/UserFavBand'
-import UserDetails from './pages/UserDetails'
-import OfferList from './pages/OfferList'
-import OfferDetails from './pages/OfferDetails'
-import EditOffer from './pages/EditOffer'
-import SubsOfferList from './pages/SubsOfferList'
-import EditBand from './pages/EditBand'
-import BandDetails from './pages/BandDetails'
+import PrivateExample from './pages/PrivateExample.jsx'
+import Error from './pages/Error.jsx'
+import NotFound from './pages/NotFound.jsx'
+import Home from './pages/Home.jsx'
+import Signup from './pages/Signup.jsx'
+import Login from './pages/Login.jsx'
+import EditUser from './pages/EditUser.jsx'
+import UserList from './pages/UserList.jsx'
+import UserFavBand from './pages/UserFavBand.jsx'
+import UserDetails from './pages/UserDetails.jsx'
+import OffersList from './pages/OffersList.jsx'
+import OfferDetails from './pages/OfferDetails.jsx'
+import EditOffer from './pages/EditOffer.jsx'
+import SubsOfferList from './pages/SubsOfferList.jsx'
+import EditBand from './pages/EditBand.jsx'
+import BandDetails from './pages/BandDetails.jsx'
 
 
 
@@ -35,16 +35,16 @@ function App() {
         <Route path="/" element={<Home/>} />
         <Route path="/login" element={<Login/>} />
         <Route path="/signup" element={<Signup/>} />
-        <Route path="/private" element={<IsPrivate> <PrivateExample /> </IsPrivate>} />
+        <Route path="/private" element={<IsPrivate><PrivateExample /></IsPrivate>} />
 
         {/* User Routes*/}
         <Route path="/user" element={<UserList />} />
-        <Route path="/user/:id/details" element={<UserDetails />} />
-        <Route path="/user/:id/edit" element={<EditUser />} />
-        <Route path="/user/bandFav" element={<UserFavBand />} />
+        <Route path="/my-profile" element={<IsPrivate><UserDetails /></IsPrivate>} />
+        <Route path="/user/edit-user" element={<IsPrivate><EditUser /></IsPrivate>} />
+        <Route path="/user/bandFav" element={<IsPrivate><UserFavBand /></IsPrivate>} />
 
         {/* Offer Routes*/}
-        <Route path="/offer" element={<OfferList />} />
+        <Route path="/offer" element={<OffersList />} />
         <Route path="/offer/:id/details" element={<OfferDetails />} />
         <Route path="/offer/:id/edit" element={<EditOffer />} />
         <Route path="/offer/subscribers" element={<SubsOfferList />} />

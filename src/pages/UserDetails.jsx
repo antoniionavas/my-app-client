@@ -7,6 +7,8 @@ function UserDetails() {
   const [ userDetails, setUserDetails ] = useState()
  
   const params = useParams()
+  console.log(params)
+  console.log(params.id)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -15,7 +17,7 @@ function UserDetails() {
 
   const getData = async () => {
     try {
-      const response = await service.get(`/user/${params.id}`)
+      const response = await service.get("/user/my-profile")
       console.log(response)
       setUserDetails(response.data)
 
@@ -27,9 +29,8 @@ function UserDetails() {
 
   const handleDelete = async () => {
     try {
-      
-      await service.delete(`/user/${params.id}`)
-      navigate("/user")
+      await service.delete("/user/auto-delete")
+      navigate("/login")
 
     } catch (error) {
       console.log(error)
@@ -54,8 +55,8 @@ function UserDetails() {
         <p>{userDetails.dateborn}</p>
         <p>{userDetails.offerType}</p>
         
-        <button onClick={handleDelete}>Borrar</button>
-        <Link to={`/user/${params.id}/edit`}>
+        <button onClick={handleDelete}>Eliminar Cuenta</button>
+        <Link to={`/user/edit-user`}>
           <button>Ir a Editar Perfil</button>
         </Link>
       </div>
