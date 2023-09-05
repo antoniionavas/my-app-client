@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import service from "../services/service.config";
 
-function BandAddForm() {
+function BandAddForm(props) {
   
   const musicGenre = ["Bachata", "Country", "Flamenco", "Funk", "Góspel", "Hip hop", "Jazz", "Música Clásica", "Metal", "Pop", "Reggae", "Reggaetón", "Rock", "Salsa", "Techno"];
 
@@ -29,9 +29,8 @@ function BandAddForm() {
     e.preventDefault()
     try {
       const response = await service.post("/band/create", { name, city, genre, foundationDate, owner })
-
       console.log("nueva banda creada", response)
-    
+      //props.getData()
       navigate("/band/:id/details")
 
     } catch (error) {

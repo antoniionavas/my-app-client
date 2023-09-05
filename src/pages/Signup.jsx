@@ -69,7 +69,6 @@ function Signup() {
       else {
         navigate("/error")
       }
-  
     }
   };
 
