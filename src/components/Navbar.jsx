@@ -23,8 +23,12 @@ function NavBar() {
     {isUserActive === true
     ? (
         <>
-          <Link to="/user/bandFav">Bandas Fav</Link>
-          <Link to="/offer">Ofertas</Link>
+          {/* <Link to="/user/bandFav">Bandas Fav</Link> */}
+          <Link to="/offer/create">Crear Oferta</Link>
+          <Link to="/band/create">Crear Banda</Link>
+          <Link to="/bands">Bandas</Link>
+          <Link to="/list-users">Users</Link>
+          <Link to="/offers">Ofertas</Link>
           <Link to="/my-profile">Mi Perfil</Link>
           <button onClick={handleLogOut}>Cerrar Sesión</button>
         </>     

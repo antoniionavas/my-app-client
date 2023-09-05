@@ -56,12 +56,15 @@ function UserEdit() {
   const handleCityChange = (e) => setCity(e.target.value);
   const handleDatebornChange = (e) => setDateborn(e.target.value);
 
+  //formatear la fecha para poder mostrarla
+  const dateToFormat = format(new Date(dateborn), "yyyy-MM-dd");
+  console.log("esta es mi fecha formateada",dateToFormat)
+
+
   useEffect(() => {
     getData()
   }, [])
   
-  const dateToFormat = format(new Date(dateborn), "yyyy-MM-dd");
-  console.log("esta es mi fecha formateada",dateToFormat)
 
   const getData = async () => {
     try {

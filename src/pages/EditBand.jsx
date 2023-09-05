@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import service from "../services/service.config";
+import { format } from "date-fns"; //formatea la fecha
 
-function BandEdit() {
+function EditBand() {
+
+  const musicGenre = ["Bachata", "Country", "Flamenco", "Funk", "Góspel", "Hip hop", "Jazz", "Música Clásica", "Metal", "Pop", "Reggae", "Reggaetón", "Rock", "Salsa", "Techno"];
 
   const params = useParams()
   const navigate = useNavigate()
@@ -10,27 +13,33 @@ function BandEdit() {
   const [name, setName] = useState("");
   const [genre, setGenre] = useState([]);
   const [city, setCity] = useState("");
-  const [foundationDate, setFoundationDate] = useState("");
+  const [foundationDate, setFoundationDate] = useState("1999-02-05");
 
 
   const handleNameChange = (e) => setName(e.target.value);
   const handleGenreChange = (e) => setGenre(e.target.value);
   const handleCityChange = (e) => setCity(e.target.value);
   const handleFoundationDateChange = (e) => setFoundationDate(e.target.value);
+  
+  //formatear la fecha para poder mostrarla
+  const dateToFormat = format(new Date(foundationDate), "yyyy-MM-dd");
+  console.log("esta es mi fecha formateada",dateToFormat)
 
   useEffect(() => {
     getData()
   }, [])
 
+
   const getData = async () => {
     try {
-      const response = await service.get(`/band/${params.id}`)
+      const response = await service.get(`/band/${params.id}/details`)
+      console.log(`${params.id}`)
       console.log(response)
       setName(response.data.name)
-      setGenre(response.data.genre)
+      setGenre(response.data.genre || [])
       setCity(response.data.city)
       setFoundationDate(response.data.foundationDate)
-
+      console.log(response.data.foundationDate)
     } catch (error) {
       console.log(error)
       navigate("/error")
@@ -41,7 +50,7 @@ function BandEdit() {
     e.preventDefault();
     try {
       
-      await service.put(`/band/${params.id}`, {
+      await service.put(`/band/${params.id}/edit`, {
         name, city, genre, foundationDate
       })
 
@@ -80,10 +89,18 @@ function BandEdit() {
 
         <label htmlFor="genre">Genre</label>
         <select
+          type="text"
           name="genre"
-          onChange={handleGenreChange}
           value={genre}
-        />
+          multiple
+          onChange={handleGenreChange}>
+            {Object.values(musicGenre).map((eachGenre) => (
+          <option key={eachGenre} value={eachGenre}>
+            {eachGenre}
+          </option>
+            ))}
+        </select>
+
 
         <br />
 
@@ -93,7 +110,7 @@ function BandEdit() {
           type="date"
           name="foundationDate"
           onChange={handleFoundationDateChange}
-          value={foundationDate}
+          value={dateToFormat}
         />
 
         <br />
@@ -105,4 +122,4 @@ function BandEdit() {
   );
 }
 
-export default BandEdit;
+export default EditBand;

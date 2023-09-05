@@ -12,7 +12,7 @@ function BandAddForm(props) {
   const [genre, setGenre] = useState([]);
   const [city, setCity] = useState("");
   const [foundationDate, setFoundationDate] = useState("");
-  const [owner, setOwner] = useState("");
+ 
 
 
   const handleNameChange = (e) => setName(e.target.value);
@@ -20,18 +20,16 @@ function BandAddForm(props) {
     const selectedGenres = Array.from(e.target.selectedOptions, (option) => option.value);
     setGenre(selectedGenres);
   };
+
   const handleCityChange = (e) => setCity(e.target.value);
   const handleFoundationDateChange = (e) => setFoundationDate(e.target.value);
  
-
-
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const response = await service.post("/band/create", { name, city, genre, foundationDate, owner })
+      const response = await service.post("/band/create", { name, city, genre, foundationDate })
       console.log("nueva banda creada", response)
-      //props.getData()
-      navigate("/band/:id/details")
+      navigate(`/band/${response.data._id}/details`)
 
     } catch (error) {
       console.log(error)

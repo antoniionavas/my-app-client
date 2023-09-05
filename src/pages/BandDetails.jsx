@@ -30,7 +30,7 @@ function BandDetails() {
     try {
       
       await service.delete(`/band/${params.id}`)
-      navigate("/band")
+      navigate("/bands")
 
     } catch (error) {
       console.log(error)
@@ -56,7 +56,7 @@ function BandDetails() {
         <p>{format(new Date(bandDetails.foundationDate), "dd-MM-yyyy")}</p>
         
         <button onClick={handleDelete}>Borrar</button>
-        <Link to={`/band/${params.id}/edit`}>
+        <Link to={"/band/edit"}>
           <button>Ir a Editar</button>
         </Link>
         <Link to={"/offer/create"}>

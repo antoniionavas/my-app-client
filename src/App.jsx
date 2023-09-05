@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import IsPrivate from './components/isPrivate'
 import BandAddForm from './components/BandAddForm'
+import OfferAddForm from './components/OfferAddForm'
 
 //paginas
 import Error from './pages/Error.jsx'
@@ -21,6 +22,7 @@ import EditOffer from './pages/EditOffer.jsx'
 import SubsOfferList from './pages/SubsOfferList.jsx'
 import EditBand from './pages/EditBand.jsx'
 import BandDetails from './pages/BandDetails.jsx'
+import BandList from './pages/BandList'
 
 
 function App() {
@@ -43,16 +45,17 @@ function App() {
         <Route path="/user/bandFav" element={<IsPrivate><UserFavBand /></IsPrivate>} />
 
         {/* Offer Routes*/}
-        <Route path="/offer" element={<IsPrivate><OffersList /></IsPrivate>} />
-        <Route path="/offer/:id/details" element={<IsPrivate><OfferDetails /></IsPrivate>} />
-        <Route path="/offer/:id/edit" element={<IsPrivate><EditOffer /></IsPrivate>} />
+        <Route path="/offers" element={<IsPrivate><OffersList /></IsPrivate>} />
+        <Route path="/offer/create" element={<IsPrivate><OfferAddForm /></IsPrivate>}/>
+        <Route path="/offer/details" element={<IsPrivate><OfferDetails /></IsPrivate>} />
+        <Route path="/offer/edit" element={<IsPrivate><EditOffer /></IsPrivate>} />
         <Route path="/offer/subscribers" element={<IsPrivate><SubsOfferList /></IsPrivate>} />
 
         {/* Band Routes*/}
         <Route path="/band/:id/details" element={<IsPrivate><BandDetails /></IsPrivate>} />
-        <Route path="/band/:id/edit" element={<IsPrivate><EditBand /></IsPrivate>} />
+        <Route path="/band/edit" element={<IsPrivate><EditBand /></IsPrivate>} />
         <Route path="/band/create" element={<IsPrivate><BandAddForm /></IsPrivate>} />
-
+        <Route path="/bands" element={<IsPrivate><BandList /></IsPrivate>} />
 
         {/* Error Routes*/}
         <Route path="/error" element={<Error/>} />

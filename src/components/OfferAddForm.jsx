@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import service from "../services/service.config";
 
-function OfferAddForm(props) {
+function OfferAddForm() {
   const musicGenre = ["Bachata", "Country", "Flamenco", "Funk", "Góspel", "Hip hop", "Jazz", "Música Clásica", "Metal", "Pop", "Reggae", "Reggaetón", "Rock", "Salsa", "Techno"];
   const typeOffer = ["Bailarín", "Cantante", "Músico"];
 
@@ -26,16 +26,16 @@ function OfferAddForm(props) {
     const selectedOfferTypes = Array.from(e.target.selectedOptions, (option) => option.value);
     setOfferType(selectedOfferTypes);
   };
+  
   const handleSalaryChange = (e) => setSalary(e.target.value);
   const handleFinalDateChange = (e) => setFinalDate(e.target.value);
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      await service.post("/offer/create", { title, description, genre, salary, finalDate, offerType })
-
+      const response = await service.post("/offer/create", { title, description, genre, salary, finalDate, offerType })
       console.log("oferta nueva creada")
-      props.getData()
+      navigate(`/offer/${response.data._id}/details`)
     } catch (error) {
       console.log(error)
       navigate("/error")
