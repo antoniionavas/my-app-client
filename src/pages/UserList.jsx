@@ -34,7 +34,7 @@ function UserList() {
       : allUsers.map((eachUser) => {
         return (
           <div key={eachUser._id}>
-            <Link to={`/user/${eachUser._id}/details`}>{eachUser.name}</Link>
+            <Link to={`/user/${eachUser._id}/details`}>{eachUser.username}</Link>
           </div>
         )
       })
