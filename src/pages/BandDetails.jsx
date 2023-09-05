@@ -59,7 +59,9 @@ function BandDetails() {
         <Link to={`/band/${params.id}/edit`}>
           <button>Ir a Editar</button>
         </Link>
-
+        <Link to={"/offer/create"}>
+          <button>Crear Oferta</button>
+        </Link>
       </div>
     </div>
   );

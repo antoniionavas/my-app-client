@@ -32,7 +32,7 @@ function OfferAddForm(props) {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      await service.post("/offer", { title, description, genre, salary, finalDate, offerType })
+      await service.post("/offer/create", { title, description, genre, salary, finalDate, offerType })
 
       console.log("oferta nueva creada")
       props.getData()
