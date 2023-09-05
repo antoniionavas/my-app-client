@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import service from "../services/service.config";
+import { format } from "date-fns"; //formatea la fecha
 
 function BandDetails() {
 
@@ -15,7 +16,7 @@ function BandDetails() {
 
   const getData = async () => {
     try {
-      const response = await service.get(`/band/${params.id}`)
+      const response = await service.get(`/band/${params.id}/details`)
       console.log(response)
       setBandDetails(response.data)
 
@@ -52,7 +53,7 @@ function BandDetails() {
         <p>{bandDetails.owner}</p>
         <p>{bandDetails.city}</p>
         <p>{bandDetails.offerType}</p>
-        <p>{bandDetails.foundationDate}</p>
+        <p>{format(new Date(bandDetails.foundationDate), "dd-MM-yyyy")}</p>
         
         <button onClick={handleDelete}>Borrar</button>
         <Link to={`/band/${params.id}/edit`}>
