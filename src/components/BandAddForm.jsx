@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import service from "../services/service.config";
 
-function BandAddForm(props) {
+function BandAddForm() {
   
   const musicGenre = ["Bachata", "Country", "Flamenco", "Funk", "Góspel", "Hip hop", "Jazz", "Música Clásica", "Metal", "Pop", "Reggae", "Reggaetón", "Rock", "Salsa", "Techno"];
 
@@ -12,6 +12,7 @@ function BandAddForm(props) {
   const [genre, setGenre] = useState([]);
   const [city, setCity] = useState("");
   const [foundationDate, setFoundationDate] = useState("");
+  const [owner, setOwner] = useState("");
 
 
   const handleNameChange = (e) => setName(e.target.value);
@@ -21,16 +22,23 @@ function BandAddForm(props) {
   };
   const handleCityChange = (e) => setCity(e.target.value);
   const handleFoundationDateChange = (e) => setFoundationDate(e.target.value);
+ 
+
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      await service.post("/banda", { name, city, genre, foundationDate })
+      const response = await service.post("/band/create", { name, city, genre, foundationDate, owner })
 
-      console.log("nueva banda creada")
-      props.getData()
+      console.log("nueva banda creada", response)
+    
+      navigate("/band/:id/details")
+
     } catch (error) {
       console.log(error)
+      if (error.response && error.response.status === 400){
+        setErrorMessage(error.response.data.errorMessage)
+      } 
       navigate("/error")
     }
   }

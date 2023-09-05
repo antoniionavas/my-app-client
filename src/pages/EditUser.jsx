@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import service from "../services/service.config.js";
 import { uploadImageService } from "../services/upload.services.js";
+import { format } from "date-fns"; //formatea la fecha
 
 function UserEdit() {
 
@@ -17,7 +18,7 @@ function UserEdit() {
   const [genre, setGenre] = useState([]);
   const [offerType, setOfferType] = useState([]);
   const [city, setCity] = useState("");
-  const [dateborn, setDateborn] = useState("");
+  const [dateborn, setDateborn] = useState("1999-02-05");
 
   const handleImgUpload = async (event) => {
     console.log("El archivo a actualizar es: ", event.target.files[0]);
@@ -58,6 +59,9 @@ function UserEdit() {
   useEffect(() => {
     getData()
   }, [])
+  
+  const dateToFormat = format(new Date(dateborn), "yyyy-MM-dd");
+  console.log("esta es mi fecha formateada",dateToFormat)
 
   const getData = async () => {
     try {
@@ -91,6 +95,7 @@ function UserEdit() {
       navigate("/error")
     }
   };
+
 
   return (
     <div>
@@ -165,7 +170,7 @@ function UserEdit() {
           type="date"
           name="dateborn"
           onChange={handleDatebornChange}
-          value={dateborn}
+          value={dateToFormat}
         />
 
         <br />

@@ -31,7 +31,7 @@ function Login() {
       //el token se almacena en el LocalStorage
       localStorage.setItem("authToken", response.data.authToken)
       await verifyToken()
-      navigate("/private")
+      navigate("/my-profile")
     } 
     
     catch (error) {

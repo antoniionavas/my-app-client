@@ -23,7 +23,6 @@ function NavBar() {
     {isUserActive === true
     ? (
         <>
-          <Link to="/private">Página privada</Link>
           <Link to="/user/bandFav">Bandas Fav</Link>
           <Link to="/offer">Ofertas</Link>
           <Link to="/my-profile">Mi Perfil</Link>

@@ -65,6 +65,9 @@ function UserDetails() {
         <Link to={"/update"}>
           <button>Ir a Editar Perfil</button>
         </Link>
+        <Link to={"/band/create"}>
+          <button>Crear una Banda</button>
+        </Link>        
       </div>
     </div>
   );
