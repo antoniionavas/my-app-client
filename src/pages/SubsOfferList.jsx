@@ -2,7 +2,7 @@ import React from 'react'
 
 function SubsOfferList() {
   return (
-    <div>SubsOfferList</div>
+    <div>Subscriptores en esta Oferta</div>
   )
 }
 

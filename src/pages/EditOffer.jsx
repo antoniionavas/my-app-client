@@ -31,11 +31,15 @@ function OfferEdit() {
     setOfferType(selectedOfferTypes);
   };
   const handleSalaryChange = (e) => setSalary(e.target.value);
-  const handleFinalDateChange = (e) => setFinalDate(e.target.value);
-
+  const handleFinalDateChange = (e) => {
+    const dateToFormat = format(new Date(e.target.value), "yyyy-MM-dd");
+    console.log("esta es mi fecha formateada",dateToFormat)
+    setFinalDate(dateToFormat)
+  }
+  console.log(finalDate)
    //formatear la fecha para poder mostrarla
-   const dateToFormat = format(new Date(finalDate), "yyyy-MM-dd");
-   console.log("esta es mi fecha formateada",dateToFormat)
+
+   
 
   useEffect(() => {
     getData()
@@ -50,7 +54,9 @@ function OfferEdit() {
       setGenre(response.data.genre || [])
       setOfferType(response.data.offerType || [])
       setSalary(response.data.salary)
-      setFinalDate(response.data.finalDate)
+      const dateToFormat = format(new Date(response.data.finalDate), "yyyy-MM-dd");
+      console.log("esta es mi fecha formateada",dateToFormat)
+      setFinalDate(dateToFormat)
 
     } catch (error) {
       console.log(error)
@@ -147,7 +153,7 @@ function OfferEdit() {
           type="date"
           name="finalDate"
           onChange={handleFinalDateChange}
-          value={dateToFormat}
+          value={finalDate}
         />
 
         <br />

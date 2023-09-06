@@ -5,6 +5,8 @@ import Navbar from './components/Navbar'
 import IsPrivate from './components/isPrivate'
 import BandAddForm from './components/BandAddForm'
 import OfferAddForm from './components/OfferAddForm'
+import IsAdmin from './components/IsAdmin'
+import Search from './components/Search'
 
 //paginas
 import Error from './pages/Error.jsx'
@@ -23,6 +25,7 @@ import SubsOfferList from './pages/SubsOfferList.jsx'
 import EditBand from './pages/EditBand.jsx'
 import BandDetails from './pages/BandDetails.jsx'
 import BandList from './pages/BandList'
+import OffersSubs from './pages/OffersSubs'
 
 
 function App() {
@@ -39,10 +42,11 @@ function App() {
         
 
         {/* User Routes*/}
-        <Route path="/list-users" element={<UserList />} />
+        <Route path="/list-users" element={<IsPrivate><IsAdmin><UserList /></IsAdmin></IsPrivate>} />
         <Route path="/my-profile" element={<IsPrivate><UserDetails /></IsPrivate>} />
         <Route path="/update" element={<IsPrivate><EditUser /></IsPrivate>} />
         <Route path="/user/bandFav" element={<IsPrivate><UserFavBand /></IsPrivate>} />
+        <Route path="/user/myoffers" element={<IsPrivate><OffersSubs /></IsPrivate>} />
 
         {/* Offer Routes*/}
         <Route path="/offers" element={<IsPrivate><OffersList /></IsPrivate>} />
@@ -50,6 +54,7 @@ function App() {
         <Route path="/offer/:id/details" element={<IsPrivate><OfferDetails /></IsPrivate>} />
         <Route path="/offer/:id/edit" element={<IsPrivate><EditOffer /></IsPrivate>} />
         <Route path="/offer/subscribers" element={<IsPrivate><SubsOfferList /></IsPrivate>} />
+      
 
         {/* Band Routes*/}
         <Route path="/band/:id/details" element={<IsPrivate><BandDetails /></IsPrivate>} />

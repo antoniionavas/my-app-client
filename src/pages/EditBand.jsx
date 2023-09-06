@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import service from "../services/service.config";
+import moment from "moment";
+//import Moment from "react-moment";
 import { format } from "date-fns"; //formatea la fecha
 
 function EditBand() {
@@ -13,21 +15,30 @@ function EditBand() {
   const [name, setName] = useState("");
   const [genre, setGenre] = useState([]);
   const [city, setCity] = useState("");
-  const [foundationDate, setFoundationDate] = useState("1999-02-10");
+  const [foundationDate, setFoundationDate] = useState(moment().format('YYYY-MM-DD'));
 
 
   const handleNameChange = (e) => setName(e.target.value);
+  const handleCityChange = (e) => setCity(e.target.value);
   const handleGenreChange = (e) => {
     const selectedGenres = Array.from(e.target.selectedOptions, (option) => option.value);
     setGenre(selectedGenres);
   };
 
-  const handleCityChange = (e) => setCity(e.target.value);
-  const handleFoundationDateChange = (e) => setFoundationDate(e.target.value);
+  const onChangeDate = (date) => {
+    const newDate = setFoundationDate(moment(new Date(date.target.foundationDate)).format("YYYY-MM-DD"));
+    setFoundationDate(newDate);
+      console.log(newDate); //always log "1970-01-01"
+    };
+
+  //const handleFoundationDateChange = (e) => setFoundationDate(e.target.value);
   
-  //formatear la fecha para poder mostrarla
-  const dateToFormat = format(new Date(foundationDate), "yyyy-MM-dd");
-  console.log("esta es mi fecha formateada",dateToFormat)
+  
+ 
+    
+  // //formatear la fecha para poder mostrarla
+  // const dateToFormat = format(new Date(foundationDate), "yyyy-MM-dd");
+  // console.log("esta es mi fecha formateada",dateToFormat)
 
   useEffect(() => {
     getData()
@@ -113,8 +124,8 @@ function EditBand() {
         <input
           type="date"
           name="foundationDate"
-          onChange={handleFoundationDateChange}
-          value={dateToFormat}
+          onChange={(e)=>onChangeDate(e)}
+          value={foundationDate}
         />
 
         <br />

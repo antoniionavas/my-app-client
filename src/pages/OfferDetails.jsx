@@ -30,8 +30,18 @@ function OfferDetails() {
     try {
       
       await service.delete(`/offer/${params.id}`)
-      navigate("/offer")
+      navigate("/offers")
 
+    } catch (error) {
+      console.log(error)
+      navigate("/error")
+    }
+  }
+
+  const handSubcribeOffer = async () => {
+    try {
+      
+   
     } catch (error) {
       console.log(error)
       navigate("/error")
@@ -65,6 +75,9 @@ function OfferDetails() {
         <p>{format(new Date(offerDetails.finalDate), "dd-MM-yyyy")}</p>
   
         <button onClick={handleDelete}>Borrar</button>
+        <br/>
+        <button>Subscribirse</button>
+        <br/>
         <Link to={`/offer/${offerDetails._id}/edit`}>
           <button>Ir a Editar</button>
         </Link>

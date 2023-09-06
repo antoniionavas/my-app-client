@@ -28,7 +28,6 @@ function NavBar() {
           <Link to="/band/create">Crear Banda</Link>
           <Link to="/bands">Bandas</Link>
           <Link to="/list-users">Users</Link>
-          <Link to="/offers">Ofertas</Link>
           <Link to="/my-profile">Mi Perfil</Link>
           <button onClick={handleLogOut}>Cerrar Sesión</button>
         </>     

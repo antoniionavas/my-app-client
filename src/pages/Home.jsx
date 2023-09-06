@@ -1,8 +1,9 @@
 import React from 'react'
+import OfferList from './OffersList'
 
 function Home() {
   return (
-    <div>Home</div>
+    <div><OfferList/></div>
   )
 }
 
