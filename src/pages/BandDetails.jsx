@@ -49,14 +49,19 @@ function BandDetails() {
       <div>
         <h3>{bandDetails.name}</h3>
         <p>{bandDetails.components}</p>
+        <label>Género:</label>
         <p>{bandDetails.genre}</p>
+        <label>Creador</label>
         <p>{bandDetails.owner}</p>
+        <label>Ciudad</label>
         <p>{bandDetails.city}</p>
+        <label>Tipo de Oferta</label>
         <p>{bandDetails.offerType}</p>
+        <label>Fundación</label>
         <p>{format(new Date(bandDetails.foundationDate), "dd-MM-yyyy")}</p>
         
         <button onClick={handleDelete}>Borrar</button>
-        <Link to={"/band/edit"}>
+        <Link to={`/band/${bandDetails._id}/edit`}>
           <button>Ir a Editar</button>
         </Link>
         <Link to={"/offer/create"}>

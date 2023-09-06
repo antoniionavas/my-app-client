@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import service from "../services/service.config";
+import { format } from "date-fns"; //formatea la fecha
 
 function OfferEdit() {
+
+  
+  const musicGenre = ["Bachata", "Country", "Flamenco", "Funk", "Góspel", "Hip hop", "Jazz", "Música Clásica", "Metal", "Pop", "Reggae", "Reggaetón", "Rock", "Salsa", "Techno"];
+  const typeOffer = ["Bailarín", "Cantante", "Músico"];
 
   const params = useParams()
   const navigate = useNavigate()
@@ -12,15 +17,25 @@ function OfferEdit() {
   const [genre, setGenre] = useState([]);
   const [offerType, setOfferType] = useState([]);
   const [salary, setSalary] = useState("");
-  const [finalDate, setFinalDate] = useState("");
+  const [finalDate, setFinalDate] = useState("1999-02-11");
 
 
   const handleTitleChange = (e) => setTitle(e.target.value);
   const handleDescriptionChange = (e) => setDescription(e.target.value);
-  const handleGenreChange = (e) => setGenre(e.target.value);
-  const handleOfferTypeChange = (e) => setOfferType(e.target.value);
+  const handleGenreChange = (e) => {
+    const selectedGenres = Array.from(e.target.selectedOptions, (option) => option.value);
+    setGenre(selectedGenres);
+  };
+  const handleOfferTypeChange = (e) => {
+    const selectedOfferTypes = Array.from(e.target.selectedOptions, (option) => option.value);
+    setOfferType(selectedOfferTypes);
+  };
   const handleSalaryChange = (e) => setSalary(e.target.value);
   const handleFinalDateChange = (e) => setFinalDate(e.target.value);
+
+   //formatear la fecha para poder mostrarla
+   const dateToFormat = format(new Date(finalDate), "yyyy-MM-dd");
+   console.log("esta es mi fecha formateada",dateToFormat)
 
   useEffect(() => {
     getData()
@@ -28,12 +43,12 @@ function OfferEdit() {
 
   const getData = async () => {
     try {
-      const response = await service.get(`/offer/${params.id}`)
+      const response = await service.get(`/offer/${params.id}/details`)
       console.log(response)
       setTitle(response.data.title)
       setDescription(response.data.description)
-      setGenre(response.data.genre)
-      setOfferType(response.data.offerType)
+      setGenre(response.data.genre || [])
+      setOfferType(response.data.offerType || [])
       setSalary(response.data.salary)
       setFinalDate(response.data.finalDate)
 
@@ -96,19 +111,33 @@ function OfferEdit() {
 
         <label htmlFor="genre">Genre</label>
         <select
+          type="text"
           name="genre"
-          onChange={handleGenreChange}
           value={genre}
-        />
+          multiple
+          onChange={handleGenreChange}>
+            {Object.values(musicGenre).map((eachGenre) => (
+          <option key={eachGenre} value={eachGenre}>
+            {eachGenre}
+          </option>
+            ))}
+        </select>
 
         <br />
 
         <label htmlFor="offerType">OfferType</label>
         <select
+          type="text"
           name="offerType"
-          onChange={handleOfferTypeChange}
           value={offerType}
-        />
+          multiple
+          onChange={handleOfferTypeChange}>
+            {Object.values(typeOffer).map((eachOffer) => (
+          <option key={eachOffer} value={eachOffer}>
+            {eachOffer}
+          </option>
+        ))}
+        </select>
 
         <br />
 
@@ -118,7 +147,7 @@ function OfferEdit() {
           type="date"
           name="finalDate"
           onChange={handleFinalDateChange}
-          value={finalDate}
+          value={dateToFormat}
         />
 
         <br />

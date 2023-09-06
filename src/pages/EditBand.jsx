@@ -13,11 +13,15 @@ function EditBand() {
   const [name, setName] = useState("");
   const [genre, setGenre] = useState([]);
   const [city, setCity] = useState("");
-  const [foundationDate, setFoundationDate] = useState("1999-02-05");
+  const [foundationDate, setFoundationDate] = useState("1999-02-10");
 
 
   const handleNameChange = (e) => setName(e.target.value);
-  const handleGenreChange = (e) => setGenre(e.target.value);
+  const handleGenreChange = (e) => {
+    const selectedGenres = Array.from(e.target.selectedOptions, (option) => option.value);
+    setGenre(selectedGenres);
+  };
+
   const handleCityChange = (e) => setCity(e.target.value);
   const handleFoundationDateChange = (e) => setFoundationDate(e.target.value);
   
