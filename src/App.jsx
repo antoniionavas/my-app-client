@@ -6,7 +6,6 @@ import IsPrivate from './components/isPrivate'
 import BandAddForm from './components/BandAddForm'
 import OfferAddForm from './components/OfferAddForm'
 import IsAdmin from './components/isAdmin'
-import Search from './components/Search'
 
 //paginas
 import Error from './pages/Error.jsx'
@@ -48,7 +47,7 @@ function App() {
 
         {/* Offer Routes*/}
         <Route path="/offers" element={<IsPrivate><OffersList /></IsPrivate>} />
-        <Route path="/offer/create" element={<IsPrivate><OfferAddForm /></IsPrivate>}/>
+        <Route path="/:bandId/details/createOffer" element={<IsPrivate><OfferAddForm /></IsPrivate>}/>
         <Route path="/offer/:id/details" element={<IsPrivate><OfferDetails /></IsPrivate>} />
         <Route path="/offer/:id/edit" element={<IsPrivate><EditOffer /></IsPrivate>} />
         <Route path="/offer/subscribers" element={<IsPrivate><SubsOfferList /></IsPrivate>} />

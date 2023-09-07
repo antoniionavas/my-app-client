@@ -8,6 +8,7 @@ function BandDetails() {
   const [ bandDetails, setBandDetails ] = useState()
   const params = useParams()
   const navigate = useNavigate()
+console.log("esto es params",params)
 
   useEffect(() => {
     getData()
@@ -78,7 +79,7 @@ function BandDetails() {
           <button>Ir a Editar</button>
         </Link>
         <button onClick={() => handleBandFav(bandDetails._id)}>Agregar Band Fav</button>
-        <Link to={"/offer/create"}>
+        <Link to={`/${params.id}/details/createOffer`}>
           <button>Crear Oferta</button>
         </Link>
       </div>

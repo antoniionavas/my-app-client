@@ -17,7 +17,7 @@ function OfferDetails() {
   const getData = async () => {
     try {
       const response = await service.get(`/offer/${params.id}/details`)
-      console.log(response)
+      console.log("response offerdetails",response.data)
       setOfferDetails(response.data)
 
     } catch (error) {
@@ -63,7 +63,9 @@ function OfferDetails() {
       
         <h3>{offerDetails.title}</h3>
         <label>Banda</label>
-        <p>{offerDetails.band}</p>
+        <Link to={`/band/${offerDetails.band._id}/details`}>
+        <p>{offerDetails.band.name}</p>
+        </Link>
         <label>Descripción:</label>
         <p>{offerDetails.description}</p>
         <label>Género:</label>

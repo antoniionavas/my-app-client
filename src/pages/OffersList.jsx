@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import service from "../services/service.config";
 import Search from "../components/Search";
-import { Form } from "react-bootstrap";
 
 function OfferList() {
 
@@ -11,8 +10,6 @@ function OfferList() {
   const [ allOffers, setAllOffers ] = useState()
   const [ searchQuery, setSearchQuery ] = useState("")
   
- 
-
   useEffect(() => {
     getData()
   }, [])
@@ -63,15 +60,7 @@ function OfferList() {
     <hr />
     <label>Realice una búsqueda por Título: </label>
     <Search setSearchQuery={setSearchQuery} searchQuery={searchQuery}/>
-    <Form.Group>
-        <Form.Control
-          type="text"
-          placeholder="Buscar por nombre de especialidad"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-    </Form.Group>
-
+   
     <hr />
 
     {allOffers === undefined ? (
@@ -93,7 +82,7 @@ function OfferList() {
         </div>
       </div>
       <div className="row">
-          {filteredTitle.filter((eachOffer) => {
+          {allOffers.filter((eachOffer) => {
             return eachOffer.title.startsWith(searchQuery)})
           .map((eachOffer) => (
             <div key={eachOffer._id} className="col-md-4 mb-4">
