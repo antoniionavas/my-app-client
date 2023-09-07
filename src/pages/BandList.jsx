@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import service from "../services/service.config";
 import { format } from "date-fns"; //formatea la fecha
 
 function BandList() {
     const navigate = useNavigate()
+    const params = useParams()
 
     const [ allBands, setAllBands ] = useState()
   
@@ -15,13 +16,30 @@ function BandList() {
     const getData = async () => {
       try {
         const response = await service.get("/band")
-        console.log(response.data)
         setAllBands(response.data)
   
       } catch (error) {
         console.log(error)
         navigate("/error")
       }
+    }
+    
+
+    const handleDeleteBand = async (bandId) => {
+      try {
+        
+        await service.delete(`/band/${bandId}`)
+        console.log(`${bandId}`)
+        getData()
+  
+      } catch (error) {
+        console.log(error)
+        navigate("/error")
+      }
+    }
+
+    if (allBands === undefined) {
+      return <h3>...buscando lista de bandas</h3>
     }
   
     return (
@@ -52,7 +70,7 @@ function BandList() {
                     <td>{eachBand.genre}</td>
                     <td>{eachBand.city}</td>
                     <td>{format(new Date(eachBand.foundationDate), "dd-MM-yyyy")}</td>
-                    <td><button>Eliminar</button></td>
+                    <td><button onClick={() => handleDeleteBand(eachBand._id)}>Borrar</button></td>
                   </tr>
                 );
               })
@@ -60,25 +78,6 @@ function BandList() {
           </tbody>
         </table>
       </div>
-
-      // <div>
-       
-      //   <h3>Lista de Bandas</h3>
-  
-      //   {allBands === undefined
-      //   ? <h3>... buscando Bandas</h3>
-      //   : allBands.map((eachBand) => {
-      //     return (
-      //       <div key={eachBand._id}>
-      //         <Link to={`/band/${eachBand._id}/details`}>{eachBand.name}</Link>
-      //         <p>{eachBand.genre}</p>
-      //         <p>{eachBand.city}</p>
-      //         <p>{eachBand.foundationDate}</p>
-      //       </div>
-      //     )
-      //   })
-      //   }
-      // </div>
     );
 }
 

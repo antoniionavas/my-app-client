@@ -16,7 +16,6 @@ import Signup from './pages/Signup.jsx'
 import Login from './pages/Login.jsx'
 import EditUser from './pages/EditUser.jsx'
 import UserList from './pages/UserList.jsx'
-import UserFavBand from './pages/UserFavBand.jsx'
 import UserDetails from './pages/UserDetails.jsx'
 import OffersList from './pages/OffersList.jsx'
 import OfferDetails from './pages/OfferDetails.jsx'
@@ -45,7 +44,6 @@ function App() {
         <Route path="/list-users" element={<IsPrivate><IsAdmin><UserList /></IsAdmin></IsPrivate>} />
         <Route path="/my-profile" element={<IsPrivate><UserDetails /></IsPrivate>} />
         <Route path="/update" element={<IsPrivate><EditUser /></IsPrivate>} />
-        <Route path="/user/bandFav" element={<IsPrivate><UserFavBand /></IsPrivate>} />
         <Route path="/user/myoffers" element={<IsPrivate><OffersSubs /></IsPrivate>} />
 
         {/* Offer Routes*/}
@@ -60,7 +58,7 @@ function App() {
         <Route path="/band/:id/details" element={<IsPrivate><BandDetails /></IsPrivate>} />
         <Route path="/band/:id/edit" element={<IsPrivate><EditBand /></IsPrivate>} />
         <Route path="/band/create" element={<IsPrivate><BandAddForm /></IsPrivate>} />
-        <Route path="/bands" element={<IsPrivate><BandList /></IsPrivate>} />
+        <Route path="/bands" element={<IsPrivate><IsAdmin><BandList /></IsAdmin></IsPrivate>} />
 
         {/* Error Routes*/}
         <Route path="/error" element={<Error/>} />

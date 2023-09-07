@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useContext } from 'react'
 import { AuthContext } from '../context/auth.context'
 import { useNavigate } from 'react-router-dom'
+import isAdmin from './isAdmin'
 
 function NavBar() {
 
@@ -26,8 +27,8 @@ function NavBar() {
           {/* <Link to="/user/bandFav">Bandas Fav</Link> */}
           <Link to="/offer/create">Crear Oferta</Link>
           <Link to="/band/create">Crear Banda</Link>
-          <Link to="/bands">Bandas</Link>
-          <Link to="/list-users">Users</Link>
+          <isAdmin><Link to="/bands">Bandas</Link></isAdmin>
+          <isAdmin><Link to="/list-users">Users</Link></isAdmin>
           <Link to="/my-profile">Mi Perfil</Link>
           <button onClick={handleLogOut}>Cerrar Sesión</button>
         </>     

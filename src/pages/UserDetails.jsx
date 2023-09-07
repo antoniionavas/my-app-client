@@ -28,7 +28,7 @@ function UserDetails() {
     }
   }
 
-
+  
   if (userDetails === undefined) {
     return <h3>...buscando detalles del Usuario</h3>
   }
@@ -45,13 +45,23 @@ function UserDetails() {
         <p>{userDetails.city}</p>
         <p>{format(new Date(userDetails.dateborn), "dd-MM-yyyy")}</p>
         <p>{userDetails.offerType}</p>
-      
+
+
         <Link to={"/update"}>
           <button>Ir a Editar Perfil</button>
         </Link>
         <Link to={"/band/create"}>
           <button>Crear una Banda</button>
-        </Link>        
+        </Link>
+        <br/> 
+        <br/>       
+        <div>
+          <h3>Bandas Favoritas</h3>
+          {userDetails.bandFav.map((eachBand) => {
+            return <Link to={`/band/${eachBand._id}/details`}>{eachBand.name}</Link>
+            })
+          }
+        </div>
       </div>
     </div>
   );

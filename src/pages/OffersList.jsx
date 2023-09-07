@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import service from "../services/service.config";
 import Search from "../components/Search";
+import { Form } from "react-bootstrap";
 
 function OfferList() {
 
@@ -9,6 +10,8 @@ function OfferList() {
 
   const [ allOffers, setAllOffers ] = useState()
   const [ searchQuery, setSearchQuery ] = useState("")
+  
+ 
 
   useEffect(() => {
     getData()
@@ -26,6 +29,7 @@ function OfferList() {
     }
   }
 
+  
   const handleSortGenreOffer = (porTipo) => {
     console.log("intento de ordenar por género");
     let cloneOffers = JSON.parse(JSON.stringify(allOffers));
@@ -39,8 +43,8 @@ function OfferList() {
     });
     setAllOffers(cloneOffers)
   };
-
-
+  
+  
   const handleSortOfferTypeOffer = () => {
     console.log("intento de ordenar por tipo de oferta");
     let cloneOffers = JSON.parse(JSON.stringify(allOffers));
@@ -49,47 +53,30 @@ function OfferList() {
     });
     setAllOffers(cloneOffers)
   }
-
+ 
+ 
   return (
-
+    
     <div>
 
       
     <hr />
-    <label>Realice una búsqueda por título: </label>
+    <label>Realice una búsqueda por Título: </label>
     <Search setSearchQuery={setSearchQuery} searchQuery={searchQuery}/>
+    <Form.Group>
+        <Form.Control
+          type="text"
+          placeholder="Buscar por nombre de especialidad"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+    </Form.Group>
 
     <hr />
 
     {allOffers === undefined ? (
       <h3>... buscando Ofertas</h3>
       ) : (
-      //   <table>
-      //   <thead>
-      //   <h3>Lista de Ofertas</h3>
-      //   <br />
-      //   <button onClick={() => handleSortGenreOffer("genre")}>Ordenar Género</button>
-      //   <br />
-      //   <button onClick={() => handleSortOfferTypeOffer("typeOffer")}>Ordenar Tipo</button>
-      //   <br />
-      //     <tr>
-      //       <th>Título</th>
-      //       <th>Género</th>
-      //       <th>Tipo de Oferta</th>
-      //     </tr>
-      //   </thead>
-      //   <tbody>
-      //     {allOffers.map((eachOffer) => (
-      //       <tr key={eachOffer._id}>
-      //         <td>
-      //           <Link to={`/offer/${eachOffer._id}/details`}>{eachOffer.title}</Link>
-      //         </td>
-      //         <td>{eachOffer.genre}</td>
-      //         <td>{eachOffer.offerType}</td>
-      //       </tr>
-      //     ))}
-      //   </tbody>
-      // </table>
       <div className="container">
       <h3>Lista de Ofertas</h3>
       <div className="row">
@@ -106,7 +93,7 @@ function OfferList() {
         </div>
       </div>
       <div className="row">
-          {allOffers.filter((eachOffer) => {
+          {filteredTitle.filter((eachOffer) => {
             return eachOffer.title.startsWith(searchQuery)})
           .map((eachOffer) => (
             <div key={eachOffer._id} className="col-md-4 mb-4">
@@ -124,7 +111,7 @@ function OfferList() {
       </div>
     </div>
     )}
-  </div>
+   </div>
   );
 }
 

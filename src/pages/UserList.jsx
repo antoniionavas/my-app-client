@@ -25,6 +25,16 @@ function UserList() {
     }
   }
 
+  const handleDelete = async (userId) => {
+    try {
+      await service.delete(`/user/delete/${userId}`);
+      getData()
+    } catch (error) {
+      console.log(error);
+      navigate("/error");
+    }
+  };
+
   return (
     <div>
     <table>
@@ -61,7 +71,7 @@ function UserList() {
                 <td>{eachUser.offerType}</td>
                 <td>{eachUser.city}</td>
                 <td>{format(new Date(eachUser.dateborn), "dd-MM-yyyy")}</td>
-                <td><button>Eliminar</button></td>
+                <td><button onClick={() => handleDelete(eachUser._id)}>Eliminar</button></td>
               </tr>
             );
           })

@@ -6,7 +6,6 @@ import { format } from "date-fns"; //formatea la fecha
 function BandDetails() {
 
   const [ bandDetails, setBandDetails ] = useState()
- 
   const params = useParams()
   const navigate = useNavigate()
 
@@ -26,6 +25,20 @@ function BandDetails() {
     }
   }
 
+  
+  const handleBandFav = async (bandId) => {
+    try {
+      
+      await service.post(`/user/${bandId}/fav`)
+      console.log(`${bandId}`)
+
+    } catch (error) {
+      console.log(error)
+      navigate("/error")
+    }
+  }
+
+
   const handleDelete = async () => {
     try {
       
@@ -37,6 +50,8 @@ function BandDetails() {
       navigate("/error")
     }
   }
+
+  console.log("detalles de la bandela", bandDetails)
 
   if (bandDetails === undefined) {
     return <h3>...buscando detalles de la Banda</h3>
@@ -52,11 +67,9 @@ function BandDetails() {
         <label>Género:</label>
         <p>{bandDetails.genre}</p>
         <label>Creador</label>
-        <p>{bandDetails.owner}</p>
+        <p>{bandDetails.owner.username}</p>
         <label>Ciudad</label>
         <p>{bandDetails.city}</p>
-        <label>Tipo de Oferta</label>
-        <p>{bandDetails.offerType}</p>
         <label>Fundación</label>
         <p>{format(new Date(bandDetails.foundationDate), "dd-MM-yyyy")}</p>
         
@@ -64,6 +77,7 @@ function BandDetails() {
         <Link to={`/band/${bandDetails._id}/edit`}>
           <button>Ir a Editar</button>
         </Link>
+        <button onClick={() => handleBandFav(bandDetails._id)}>Agregar Band Fav</button>
         <Link to={"/offer/create"}>
           <button>Crear Oferta</button>
         </Link>

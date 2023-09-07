@@ -10,6 +10,7 @@ function AuthWrapper(props){
     const [role, setRole] = useState("")
     const [activeUserId, setActiveUserId] = useState(null) //nulo porque no sabemos cual es el valor
     const [isPageLoading, setIsPageLoading] = useState(true)
+    
 
     useEffect(() => {
         verifyToken()
