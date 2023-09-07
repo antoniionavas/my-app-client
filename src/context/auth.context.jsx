@@ -7,7 +7,7 @@ function AuthWrapper(props){
 
 
     const [isUserActive, setIsUserActive] = useState(false)
-    const [isAdmin, setIsAdmin] = useState(false)
+    const [role, setRole] = useState("")
     const [activeUserId, setActiveUserId] = useState(null) //nulo porque no sabemos cual es el valor
     const [isPageLoading, setIsPageLoading] = useState(true)
 
@@ -26,14 +26,14 @@ function AuthWrapper(props){
 
             setIsUserActive(true)
             setActiveUserId(response.data._id)
-            setIsAdmin(response.data.role)
+            setRole(response.data.role)
             setIsPageLoading(false)
         } 
         catch (error) {
             console.log(error)
             setIsUserActive(false)
             setActiveUserId(null)
-            setIsAdmin(false)
+            setRole(null)
             setIsPageLoading(false)
         }
     }
@@ -42,7 +42,7 @@ function AuthWrapper(props){
         verifyToken, //para validar el token en login, volver a la app o logout
         isUserActive,// para mostrar enlaces dependiendo de si el usuario está activo o no 
         activeUserId, // mostrar funcionalidades de borrar o editar 
-        isAdmin      // mostrar contenido/funciones dependiendo si es admin o no
+        role      // mostrar contenido/funciones dependiendo si es admin o no
     }
 
     //clausula de guardia para toda la pagina

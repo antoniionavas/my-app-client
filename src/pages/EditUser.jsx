@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import service from "../services/service.config.js";
 import { uploadImageService } from "../services/upload.services.js";
-import { format } from "date-fns"; //formatea la fecha
+import moment from "moment";
+// import { format } from "date-fns"; //formatea la fecha
 
 function UserEdit() {
 
@@ -18,7 +19,7 @@ function UserEdit() {
   const [genre, setGenre] = useState([]);
   const [offerType, setOfferType] = useState([]);
   const [city, setCity] = useState("");
-  const [dateborn, setDateborn] = useState("1999-02-05");
+  const [dateborn, setDateborn] = useState(moment().format('YYYY-MM-DD'));
 
   const handleImgUpload = async (event) => {
     console.log("El archivo a actualizar es: ", event.target.files[0]);
@@ -54,11 +55,11 @@ function UserEdit() {
     setOfferType(selectedOfferTypes);
   };
   const handleCityChange = (e) => setCity(e.target.value);
-  const handleDatebornChange = (e) => setDateborn(e.target.value);
 
-  //formatear la fecha para poder mostrarla
-  const dateToFormat = format(new Date(dateborn), "yyyy-MM-dd");
-  console.log("esta es mi fecha formateada",dateToFormat)
+  const onChangeDate = (date) => {
+    console.log(date.target.value)
+    setDateborn(moment(date.target.value).format("YYYY-MM-DD"));
+  };
 
 
   useEffect(() => {
@@ -75,8 +76,9 @@ function UserEdit() {
       setGenre(response.data.genre || [])
       setOfferType(response.data.offerType || [])
       setCity(response.data.city)
-      setDateborn(response.data.dateborn)
-
+      let dateRightFormat = moment(response.data.dateborn).format('YYYY-MM-DD')
+      setDateborn(dateRightFormat)
+      console.log(response.data.dateborn)
     } catch (error) {
       console.log(error)
       navigate("/error")
@@ -172,8 +174,8 @@ function UserEdit() {
         <input
           type="date"
           name="dateborn"
-          onChange={handleDatebornChange}
-          value={dateToFormat}
+          onChange={onChangeDate}
+          value={dateborn}
         />
 
         <br />

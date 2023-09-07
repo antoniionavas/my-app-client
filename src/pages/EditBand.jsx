@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import service from "../services/service.config";
 import moment from "moment";
-//import Moment from "react-moment";
-import { format } from "date-fns"; //formatea la fecha
 
 function EditBand() {
 
@@ -26,19 +24,10 @@ function EditBand() {
   };
 
   const onChangeDate = (date) => {
-    const newDate = setFoundationDate(moment(new Date(date.target.foundationDate)).format("YYYY-MM-DD"));
-    setFoundationDate(newDate);
-      console.log(newDate); //always log "1970-01-01"
+    console.log(date.target.value)
+   setFoundationDate(moment(date.target.value).format("YYYY-MM-DD"));
     };
 
-  //const handleFoundationDateChange = (e) => setFoundationDate(e.target.value);
-  
-  
- 
-    
-  // //formatear la fecha para poder mostrarla
-  // const dateToFormat = format(new Date(foundationDate), "yyyy-MM-dd");
-  // console.log("esta es mi fecha formateada",dateToFormat)
 
   useEffect(() => {
     getData()
@@ -53,7 +42,8 @@ function EditBand() {
       setName(response.data.name)
       setGenre(response.data.genre || [])
       setCity(response.data.city)
-      setFoundationDate(response.data.foundationDate)
+      let dateRightFormat = moment(response.data.foundationDate).format('YYYY-MM-DD')
+      setFoundationDate(dateRightFormat)
       console.log(response.data.foundationDate)
     } catch (error) {
       console.log(error)
@@ -124,7 +114,7 @@ function EditBand() {
         <input
           type="date"
           name="foundationDate"
-          onChange={(e)=>onChangeDate(e)}
+          onChange={onChangeDate}
           value={foundationDate}
         />
 

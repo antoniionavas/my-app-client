@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import service from "../services/service.config";
-import { format } from "date-fns"; //formatea la fecha
+import moment from "moment";
 
 function OfferEdit() {
 
@@ -17,7 +17,7 @@ function OfferEdit() {
   const [genre, setGenre] = useState([]);
   const [offerType, setOfferType] = useState([]);
   const [salary, setSalary] = useState("");
-  const [finalDate, setFinalDate] = useState("1999-02-11");
+  const [finalDate, setFinalDate] = useState(moment().format('YYYY-MM-DD'));
 
 
   const handleTitleChange = (e) => setTitle(e.target.value);
@@ -31,14 +31,11 @@ function OfferEdit() {
     setOfferType(selectedOfferTypes);
   };
   const handleSalaryChange = (e) => setSalary(e.target.value);
-  const handleFinalDateChange = (e) => {
-    const dateToFormat = format(new Date(e.target.value), "yyyy-MM-dd");
-    console.log("esta es mi fecha formateada",dateToFormat)
-    setFinalDate(dateToFormat)
-  }
-  console.log(finalDate)
-   //formatear la fecha para poder mostrarla
 
+  const onChangeDate = (date) => {
+    console.log(date.target.value)
+   setFinalDate(moment(date.target.value).format("YYYY-MM-DD"));
+  };
    
 
   useEffect(() => {
@@ -54,9 +51,9 @@ function OfferEdit() {
       setGenre(response.data.genre || [])
       setOfferType(response.data.offerType || [])
       setSalary(response.data.salary)
-      const dateToFormat = format(new Date(response.data.finalDate), "yyyy-MM-dd");
-      console.log("esta es mi fecha formateada",dateToFormat)
-      setFinalDate(dateToFormat)
+      let dateRightFormat = moment(response.data.finalDate).format('YYYY-MM-DD')
+      setFinalDate(dateRightFormat)
+      console.log(response.data.finalDate)
 
     } catch (error) {
       console.log(error)
@@ -152,7 +149,7 @@ function OfferEdit() {
         <input
           type="date"
           name="finalDate"
-          onChange={handleFinalDateChange}
+          onChange={onChangeDate}
           value={finalDate}
         />
 

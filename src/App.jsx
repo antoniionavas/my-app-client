@@ -5,7 +5,7 @@ import Navbar from './components/Navbar'
 import IsPrivate from './components/isPrivate'
 import BandAddForm from './components/BandAddForm'
 import OfferAddForm from './components/OfferAddForm'
-import IsAdmin from './components/IsAdmin'
+import IsAdmin from './components/isAdmin'
 import Search from './components/Search'
 
 //paginas

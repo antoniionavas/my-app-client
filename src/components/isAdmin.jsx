@@ -4,8 +4,8 @@ import { AuthContext } from '../context/auth.context';
 import { Navigate } from 'react-router-dom';
 
 function isAdmin({ children }) {
-  const { isAdmin } = useContext(AuthContext);
-  if (isAdmin) {
+  const { role } = useContext(AuthContext);
+  if (role === "admin") {
     return children; 
   } else {
     return <Navigate to="/login" />;
