@@ -6,13 +6,17 @@ import { format } from "date-fns"; //formatea la fecha
 function BandDetails() {
 
   const [ bandDetails, setBandDetails ] = useState()
+  const [isBandFav, setIsBandFav] = useState(false)
+
   const params = useParams()
   const navigate = useNavigate()
-console.log("esto es params",params)
+  console.log("esto es params",params)
 
   useEffect(() => {
-    getData()
+    getData();
+    checkIfBandIsFav();
   }, [])
+
 
   const getData = async () => {
     try {
@@ -26,12 +30,43 @@ console.log("esto es params",params)
     }
   }
 
+  const checkIfBandIsFav = async () => {
+    try {
+      const response = await service.get("/user/my-profile");
+      console.log("funcion comprobar si es fav", response)
+      setIsBandFav(response.data.bandFav);
+      console.log("mostrando si hay bandas fav", response.data.bandFav)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   
-  const handleBandFav = async (bandId) => {
+  const handleBandFav = async () => {
     try {
       
-      await service.post(`/user/${bandId}/fav`)
-      console.log(`${bandId}`)
+      await service.post(`/user/${params.id}/fav`)
+      console.log("esta es mi banda fav",`${params.id}`)
+      setIsBandFav(true)
+
+    } catch (error) {
+      console.log(error)
+      navigate("/error")
+    }
+  }
+
+  const handleDeleteBandFav = async () => {
+    try {
+      
+     if (isBandFav) {
+        // Si ya es favorita, elimínala
+        await service.post(`/user/${params.id}/delete`);
+        setIsBandFav(false); // Desmarcar la banda como favorita
+      } else {
+        // Si no es favorita, agrégala
+        await service.post(`/user/${params.id}/fav`);
+        setIsBandFav(true); // Marcar la banda como favorita
+      }
 
     } catch (error) {
       console.log(error)
@@ -52,7 +87,7 @@ console.log("esto es params",params)
     }
   }
 
-  console.log("detalles de la bandela", bandDetails)
+  console.log("detalles de la banda", bandDetails)
 
   if (bandDetails === undefined) {
     return <h3>...buscando detalles de la Banda</h3>
@@ -73,12 +108,17 @@ console.log("esto es params",params)
         <p>{bandDetails.city}</p>
         <label>Fundación</label>
         <p>{format(new Date(bandDetails.foundationDate), "dd-MM-yyyy")}</p>
-        
+
         <button onClick={handleDelete}>Borrar</button>
         <Link to={`/band/${bandDetails._id}/edit`}>
           <button>Ir a Editar</button>
         </Link>
-        <button onClick={() => handleBandFav(bandDetails._id)}>Agregar Band Fav</button>
+       
+        {isBandFav ? (
+          <button onClick={handleDeleteBandFav}>Quitar Band Fav</button>
+        ) : (
+          <button onClick={handleBandFav}>Agregar Band Fav</button>
+        )}
         <Link to={`/${params.id}/details/createOffer`}>
           <button>Crear Oferta</button>
         </Link>

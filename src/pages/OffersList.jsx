@@ -16,10 +16,13 @@ function OfferList() {
 
   const getData = async () => {
     try {
-      const response = await service.get("/offer")
-      console.log(response.data)
-      setAllOffers(response.data)
-
+      const response = await service.get("/offer", {
+        params: {
+          title: searchQuery 
+        }
+      });
+      console.log(response.data);
+      setAllOffers(response.data);
     } catch (error) {
       console.log(error)
       navigate("/error")
@@ -82,9 +85,9 @@ function OfferList() {
         </div>
       </div>
       <div className="row">
-          {allOffers.filter((eachOffer) => {
-            return eachOffer.title.startsWith(searchQuery)})
-          .map((eachOffer) => (
+            {allOffers
+            .filter((eachOffer) => eachOffer.title.startsWith(searchQuery))
+            .map((eachOffer) => (
             <div key={eachOffer._id} className="col-md-4 mb-4">
               <div className="card border">
                 <div className="card-body">
