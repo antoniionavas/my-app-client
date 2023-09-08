@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import service from "../services/service.config";
 import { useParams } from "react-router-dom";
+import { Container, Form, Button, Row, Col } from 'react-bootstrap';
+
 
 function OfferAddForm() {
   const musicGenre = ["Bachata", "Country", "Flamenco", "Funk", "Góspel", "Hip hop", "Jazz", "Música Clásica", "Metal", "Pop", "Reggae", "Reggaetón", "Rock", "Salsa", "Techno"];
@@ -36,7 +38,7 @@ function OfferAddForm() {
     try {
       const response = await service.post(`/offer/${params.bandId}/details/createOffer`, { title, description, genre, salary, finalDate, offerType })
       console.log("oferta nueva creada")
-      // navigate(`/offer/${response.data._id}/details`)
+      navigate(`/offer/${response.data._id}/details`)
     } catch (error) {
       console.log(error)
       navigate("/error")
@@ -46,7 +48,7 @@ function OfferAddForm() {
   
   return (
     <div>
-      <h3>Crear Oferta</h3>
+      {/* <h3>Crear Oferta</h3>
 
       <form onSubmit={handleSubmit}>
         <label>Title</label>
@@ -124,7 +126,92 @@ function OfferAddForm() {
 
         <button type="submit">Crear</button>
         
-      </form>
+      </form> */}
+
+<Container>
+      <h3 className="profileOfferTitle">Crear Nueva Oferta</h3>
+      <Form className="createOfferForm" onSubmit={handleSubmit}>
+        <Row>
+          <Col md={6}>
+            <Form.Group controlId="title">
+              <Form.Label className="profileOfferLabel">Título</Form.Label>
+              <Form.Control
+                type="text"
+                name="title"
+                onChange={handleTitleChange}
+                value={title}
+              />
+            </Form.Group>
+
+            <Form.Group controlId="genre">
+              <Form.Label className="profileOfferLabel">Género Musical</Form.Label>
+              <Form.Select
+                type="text"
+                name="genre"
+                value={genre}
+                multiple
+                onChange={handleGenreChange}
+              >
+                {Object.values(musicGenre).map((eachGenre) => (
+                  <option key={eachGenre} value={eachGenre}>
+                    {eachGenre}
+                  </option>
+                ))}
+              </Form.Select>
+            </Form.Group>
+            
+            <Form.Group controlId="salary">
+              <Form.Label className="profileOfferLabel">Salario</Form.Label>
+              <Form.Control
+                type="text"
+                name="salary"
+                onChange={handleSalaryChange}
+                value={salary}
+              />
+            </Form.Group>
+          </Col>
+          <Col md={6}>
+                <Form.Group controlId="description">
+              <Form.Label className="profileOfferLabel">Descripción</Form.Label>
+              <Form.Control
+                type="text"
+                name="description"
+                onChange={handleDescriptionChange}
+                value={description}
+              />
+            </Form.Group>
+
+            <Form.Group controlId="offerType">
+              <Form.Label className="profileOfferLabel">Formación</Form.Label>
+              <Form.Select
+                type="text"
+                name="offerType"
+                value={offerType}
+                multiple
+                onChange={handleOfferTypeChange}
+              >
+                {Object.values(typeOffer).map((eachOffer) => (
+                  <option key={eachOffer} value={eachOffer}>
+                    {eachOffer}
+                  </option>
+                ))}
+              </Form.Select>
+            </Form.Group>
+            <Form.Group controlId="finalDate">
+              <Form.Label className="profileOfferLabel">Fecha de Finalización</Form.Label>
+              <Form.Control
+                type="date"
+                name="finalDate"
+                onChange={handleFinalDateChange}
+                value={finalDate}
+              />
+            </Form.Group>
+          </Col>
+        </Row>
+        <Button className="margenTop" type="submit">Crear</Button>
+      </Form>
+    </Container>
+
     </div>
   );
 }

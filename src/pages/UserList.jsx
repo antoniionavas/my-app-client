@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import service from "../services/service.config";
 import { format } from "date-fns"; //formatea la fecha
+import { Table, Button, Image } from 'react-bootstrap';
+
 
 function UserList() {
 
@@ -37,7 +39,7 @@ function UserList() {
 
   return (
     <div>
-    <table>
+    {/* <table>
       <thead>
         <h3>Lista de Usuarios</h3>
         <tr>
@@ -77,7 +79,53 @@ function UserList() {
           })
         )}
       </tbody>
-    </table>
+    </table> */}
+   <h3 className="usersListTitle">Lista de Usuarios</h3>
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th>Imagen</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Género</th>
+            <th>Tipo de Oferta</th>
+            <th>Ciudad</th>
+            <th>Fecha de Nacimiento</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          {allUsers === undefined ? (
+            <tr>
+              <td colSpan="8">... buscando</td>
+            </tr>
+          ) : (
+            allUsers.map((eachUser) => {
+              return (
+                <tr key={eachUser._id}>
+                  <td>
+                    <Image src={eachUser.profileImg} width={100} alt={eachUser.username} />
+                  </td>
+                  <td>
+                    <Link to={`/user/${eachUser._id}/details`}>{eachUser.username}</Link>
+                  </td>
+                  <td>{eachUser.email}</td>
+                  <td>{eachUser.genre}</td>
+                  <td>{eachUser.offerType}</td>
+                  <td>{eachUser.city}</td>
+                  <td>{format(new Date(eachUser.dateborn), "dd-MM-yyyy")}</td>
+                  <td>
+                    <Button variant="danger" onClick={() => handleDelete(eachUser._id)}>
+                      Eliminar
+                    </Button>
+                  </td>
+                </tr>
+              );
+            })
+          )}
+        </tbody>
+      </Table>
+
 </div>
 
   );

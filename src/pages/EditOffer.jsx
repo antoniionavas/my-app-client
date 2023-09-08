@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import service from "../services/service.config";
 import moment from "moment";
+import { Container, Form, Button, Row, Col } from 'react-bootstrap';
+
 
 function OfferEdit() {
 
@@ -79,7 +81,7 @@ function OfferEdit() {
 
   return (
     <div>
-      <h3>Editar Oferta</h3>
+      {/* <h3>Editar Oferta</h3>
 
       <form onSubmit={handleSubmit}>
         <label htmlFor="title">Title</label>
@@ -157,7 +159,91 @@ function OfferEdit() {
 
         <button type="submit">Editar</button>
         
-      </form>
+      </form> */}
+
+<Container>
+      <h3 className="editOfferTitle">Editar Oferta</h3>
+      <Form onSubmit={handleSubmit}>
+        <Row>
+          <Col md={6}>
+            <Form.Group controlId="title">
+              <Form.Label className="infoOfferContent margenTop">Título</Form.Label>
+              <Form.Control
+                type="text"
+                name="title"
+                onChange={handleTitleChange}
+                value={title}
+              />
+            </Form.Group>
+
+            <Form.Group controlId="genre">
+              <Form.Label className="infoOfferContent margenTop">Género Musical</Form.Label>
+              <Form.Select
+                type="text"
+                name="genre"
+                value={genre}
+                multiple
+                onChange={handleGenreChange}
+              >
+                {Object.values(musicGenre).map((eachGenre) => (
+                  <option key={eachGenre} value={eachGenre}>
+                    {eachGenre}
+                  </option>
+                ))}
+              </Form.Select>
+            </Form.Group>
+            
+            <Form.Group controlId="salary">
+              <Form.Label className="infoOfferContent margenTop">Salario</Form.Label>
+              <Form.Control
+                type="text"
+                name="salary"
+                onChange={handleSalaryChange}
+                value={salary}
+              />
+            </Form.Group>
+          </Col>
+          <Col md={6}>
+          <Form.Group controlId="description">
+              <Form.Label className="infoOfferContent margenTop">Descripción</Form.Label>
+              <Form.Control
+                type="text"
+                name="description"
+                onChange={handleDescriptionChange}
+                value={description}
+              />
+            </Form.Group>
+            <Form.Group controlId="offerType">
+              <Form.Label className="infoOfferContent margenTop">Formación</Form.Label>
+              <Form.Select
+                type="text"
+                name="offerType"
+                value={offerType}
+                multiple
+                onChange={handleOfferTypeChange}
+              >
+                {Object.values(typeOffer).map((eachOffer) => (
+                  <option key={eachOffer} value={eachOffer}>
+                    {eachOffer}
+                  </option>
+                ))}
+              </Form.Select>
+            </Form.Group>
+            <Form.Group controlId="finalDate">
+              <Form.Label className="infoOfferContent margenTop">Fecha Final de Oferta</Form.Label>
+              <Form.Control
+                type="date"
+                name="finalDate"
+                onChange={onChangeDate}
+                value={finalDate}
+              />
+            </Form.Group>
+          </Col>
+        </Row>
+        <Button className="margenTop" type="submit">Actualizar</Button>
+      </Form>
+    </Container>
+
     </div>
   );
 }

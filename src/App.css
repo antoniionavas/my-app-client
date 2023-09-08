@@ -5,6 +5,49 @@
   text-align: center;
 }
 
-body {width:100vw; height: 100vh;}
+body {width:100vw; height: 150vh; background-color: black!important;}
+a { margin: 10px;  text-decoration: none!important;}
 
-a { margin: 10px}
+.hrHome{color: white!important; height: 15px; margin-top: 50px;}
+
+/* Botones */
+.LogOut {border-radius: 15px; color: black; padding: 10px; display: inline-block; margin:0 10px; text-align: center; background-color: none!important; border-color: black!important;}
+.buttonSort {justify-content: center; margin-bottom: 50px;}
+.loginButton{margin-top: 30px; background-color: white!important; color: black!important;}
+.signupButton{margin-top: 30px; background-color: white!important; color: black!important;}
+
+/* Titulos */
+.searchTitle {color: white!important; font-weight: bold; margin-top: 50px; margin-bottom: 30px;}
+.offerlistTitle {color: white!important;  text-decoration: underline;}
+.loginTitle{color: white; margin-top:50px; margin-bottom:30px; }
+.signupTitle{color: white; margin-top:50px; margin-bottom:30px; }
+.bandListTitle {color: white!important; font-weight: bold; margin-top: 50px; margin-bottom: 30px;}
+.usersListTitle {color: white!important; font-weight: bold; margin-top: 50px; margin-bottom: 30px;}
+.profileUserTitle {color: white!important; font-weight: bold; margin-top: 50px; margin-bottom: 30px;}
+.profileBandTitle {color: white!important; font-weight: bold; margin-top: 50px; margin-bottom: 30px;}
+.profileOfferTitle{color: white!important; font-weight: bold; margin-top: 50px; margin-bottom: 40px;}
+.editBandTitle{color: white!important; font-weight: bold; margin-top: 50px; margin-bottom: 30px;}
+.editOfferTitle{color: white!important; font-weight: bold; margin-top: 50px; margin-bottom: 15px;}
+
+/* Forms */
+.formLogin {max-width: 500px; margin: 0 auto;}
+.loginLabel {color: white; font-size: 20px!important; margin-top: 30px; margin-bottom: 30px!important;}
+.formSignUp {max-width: 500px; margin: 0 auto;}
+.signupLabel {color: white; font-size: 20px!important; margin-top: 25px; margin-bottom: 20px!important;}
+.profileUserLabel {color: white; font-size: 20px!important; margin-top: 15px; margin-bottom: 15px!important; font-style: italic; }
+.profileBandLabel {color: white; font-size: 20px!important; margin-top: 15px; margin-bottom: 15px!important; font-style: italic; }
+.profileOfferLabel {color: white; font-size: 20px!important; margin-top: 15px; margin-bottom: 15px!important; font-style: italic; }
+.homeOfferLabel {color: black; font-size: 20px!important; margin-top: 15px; font-style: italic; }
+.titleOfferList{font-weight: bold; font-style: italic; margin-bottom: -20px;}
+.infoUserContent {font-size: 20px; color: grey; font-weight: bold;}
+.infoBandContent {font-size: 20px; color: grey; font-weight: bold;}
+.infoOfferContent {font-size: 20px; color: grey; font-weight: bold;}
+.formBand {max-width: 600px; margin: 0 auto;}
+.margenTop{margin-top: 30px;}
+.margenTopMax{margin-top: 94px;}
+.margenMedium{margin-top: 79px;}
+
+/* Detalles */
+.profileImg{border-radius: 15px;}
+.editBandForm{max-width: 850px; margin: 0 auto;}
+.createOfferForm{max-width: 1000px; margin: 0 auto;}

@@ -3,6 +3,7 @@ import service from "../services/service.config"
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../context/auth.context";
+import { Form, FormControl, Button, Alert } from 'react-bootstrap';
 
 
 function Login() {
@@ -46,41 +47,37 @@ function Login() {
   };
 
   return (
-    <div>
+   <div>
+    <h1 className="loginTitle">Inicio de Sesión</h1>
+    <Form onSubmit={handleLogin} className="formLogin">
+      <Form.Label className="loginLabel">Email:</Form.Label>
+      <FormControl
+        type="email"
+        name="email"
+        value={email}
+        onChange={handleEmailChange}
+      />
 
-      <h1>Inicia Sesión</h1>
+      <Form.Label className="loginLabel">Contraseña:</Form.Label>
+      <FormControl
+        type="password"
+        name="password"
+        value={password}
+        onChange={handlePasswordChange}
+      />
 
-      <form onSubmit={handleLogin}>
-        <label>Email:</label>
-        <input
-          type="email"
-          name="email"
-          value={email}
-          onChange={handleEmailChange}
-        />
+      <Button className="loginButton" variant="primary" type="submit">
+        Acceder
+      </Button>
 
-        <br />
+      {errorMessage && (
+        <Alert variant="danger">
+          {errorMessage}
+        </Alert>
+      )}
+    </Form>
+  </div>
 
-        <label>Contraseña:</label>
-        <input
-          type="password"
-          name="password"
-          value={password}
-          onChange={handlePasswordChange}
-        />
-
-        <br />
-
-        <button type="submit">Acceder</button>
-
-        <br />
-
-        { errorMessage ? <p>{errorMessage}</p> : null }
-
-
-      </form>
-      
-    </div>
   );
 }
 

@@ -2,100 +2,139 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import service from "../services/service.config";
 import { format } from "date-fns"; //formatea la fecha
+import { AuthContext } from "../context/auth.context";
+import { useContext } from "react";
+import { Container, Row, Col, Button, Form } from "react-bootstrap";
 
-function OfferDetails() {
+function OfferDetails(props) {
+  const [offerDetails, setOfferDetails] = useState();
+  const [isSubscribed, setIsSubscribed] = useState(false);
+  const { isUserActive } = useContext(AuthContext);
 
-  const [ offerDetails, setOfferDetails ] = useState()
- 
-  const params = useParams()
-  const navigate = useNavigate()
+  const params = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    getData()
-  }, [])
+    getData();
+    checkIsSubcriber();
+  }, []);
+
+  const checkIsSubcriber = async () => {
+    try {
+      if (offerDetails) {
+        const currentUser = isUserActive;
+        const isUserSubscribed = offerDetails.subscribers.some(
+          (user) => user._id === currentUser._id
+        );
+        setIsSubscribed(isUserSubscribed);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const getData = async () => {
     try {
-      const response = await service.get(`/offer/${params.id}/details`)
-      console.log("response offerdetails",response.data)
-      setOfferDetails(response.data)
-
+      const response = await service.get(`/offer/${params.id}/details`);
+      console.log("response offerdetails", response.data);
+      setOfferDetails(response.data);
+      checkIsSubcriber();
     } catch (error) {
-      console.log(error)
-      navigate("/error")
+      console.log(error);
+      navigate("/error");
     }
-  }
+  };
 
-  const handleSubscribe = async (offerId) => {
+  const handleAddSubscribe = async (offerId) => {
     try {
-      
-      await service.post(`/offer/${offerId}/subscribers`)
-      console.log("id de la oferta", offerId)
-      navigate("/offers")
+      if (isSubscribed) {
+        await service.post(`/offer/${offerId}/subscribers/delete`);
+        setIsSubscribed(false);
+      } else {
+        await service.post(`/offer/${offerId}/subscribers`);
+        setIsSubscribed(true);
+      }
+
+      getData();
     } catch (error) {
-      console.log(error)
-      navigate("/error")
+      console.log(error);
+      navigate("/error");
     }
-  }
+  };
 
   const handleDelete = async () => {
     try {
-      
-      await service.delete(`/offer/${params.id}`)
-      navigate("/offers")
-
+      await service.delete(`/offer/${params.id}`);
+      navigate("/offers");
     } catch (error) {
-      console.log(error)
-      navigate("/error")
+      console.log(error);
+      navigate("/error");
     }
-  }
-
+  };
 
   if (offerDetails === undefined) {
-    return <h3>...buscando detalles de la Oferta</h3>
+    return <h3>...buscando detalles de la Oferta</h3>;
   }
 
   return (
     <div>
-      <h3>Detalles de la Oferta</h3>
-
-      <div>
-      
-        <h3>{offerDetails.title}</h3>
-        <label>Banda</label>
-        <Link to={`/band/${offerDetails.band._id}/details`}>
-        <p>{offerDetails.band.name}</p>
-        </Link>
-        <label>Descripción:</label>
-        <p>{offerDetails.description}</p>
-        <label>Género:</label>
-        <p>{offerDetails.genre}</p>
-        <label>Salario:</label>
-        <p>{offerDetails.salary}</p>
-        <label>Tipo de Oferta:</label>
-        <p>{offerDetails.offerType}</p>
-        <label>Fecha de Publicación:</label>
-        <p>{format(new Date(offerDetails.initialDate), "dd-MM-yyyy")}</p>
-        <label>Fecha de Finalización:</label>
-        <p>{format(new Date(offerDetails.finalDate), "dd-MM-yyyy")}</p>
-  
-        <button onClick={handleDelete}>Borrar</button>
-        <br/>
-        <button onClick={() => handleSubscribe(offerDetails._id)}>Inscribirse</button>
-        <br/>
-        <Link to={`/offer/${offerDetails._id}/edit`}>
-          <button>Ir a Editar</button>
-        </Link>
-
-      </div>
-
-      <div>
-        <h3>Subscriptores de la Oferta</h3>
-        {offerDetails.subscribers.map((eachUser) => {
-            return <p>{eachUser.username}</p>
-            })
-          }
-      </div>
+      <Container>
+        <h3 className="profileOfferTitle">Detalles de la Oferta</h3>
+        <Row>
+          <Col md={4}>
+            <Form.Label className="profileOfferLabel">Banda</Form.Label>
+            <Link to={`/band/${offerDetails.band._id}/details`}>
+              <p className="infoOfferContent">{offerDetails.band.name}</p>
+            </Link>
+            <Form.Label className="profileOfferLabel">Título</Form.Label>
+            <p className="infoOfferContent">{offerDetails.title}</p>
+            <Form.Label className="profileOfferLabel">Descripción</Form.Label>
+            <p className="infoOfferContent">{offerDetails.description}</p>
+            <Form.Label className="profileOfferLabel">
+              Fecha de Publicación
+            </Form.Label>
+            <p className="infoOfferContent">
+              {format(new Date(offerDetails.initialDate), "dd-MM-yyyy")}
+            </p>
+          </Col>
+          <Col md={4}>
+            <Form.Label className="profileOfferLabel">
+              Género Musical
+            </Form.Label>
+            <p className="infoOfferContent">{offerDetails.genre}</p>
+            <Form.Label className="profileOfferLabel">Salario</Form.Label>
+            <p className="infoOfferContent">{offerDetails.salary}</p>
+            <Form.Label className="profileOfferLabel">Formación</Form.Label>
+            <p className="infoOfferContent">{offerDetails.offerType}</p>
+            <Form.Label className="profileOfferLabel">
+              Fecha de Finalización
+            </Form.Label>
+            <p className="infoOfferContent">
+              {format(new Date(offerDetails.finalDate), "dd-MM-yyyy")}
+            </p>
+          </Col>
+          <Col md={4} className="d-flex flex-column align-items-center">
+            <Button className="margenTop" onClick={handleDelete}>
+              Eliminar Oferta
+            </Button>
+            <Button
+              className="margenTop"
+              onClick={() => handleAddSubscribe(offerDetails._id)}
+            >
+              {isSubscribed ? "Desuscribirse" : "Subscribirse"}
+            </Button>
+            <Link to={`/offer/${offerDetails._id}/edit`}>
+              <Button className="margenTop">Editar Oferta</Button>
+            </Link>
+          </Col>
+        </Row>
+        <div>
+          <h3 className="profileOfferTitle">Subscriptores de la Oferta</h3>
+          {offerDetails.subscribers.map((eachUser) => (
+            <p className="infoOfferContent">{eachUser.username}</p>
+          ))}
+        </div>
+      </Container>
     </div>
   );
 }
