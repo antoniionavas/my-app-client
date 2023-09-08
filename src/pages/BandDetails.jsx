@@ -113,7 +113,7 @@ function BandDetails() {
                   Editar Banda
                 </button>
               </Link>
-              <Link to={`/band/${bandDetails._id}/createOffer`}>
+              <Link to={`/${bandDetails._id}/details/createOffer`}>
                 <button className="btn btn-primary margenTop">
                   Crear Oferta
                 </button>

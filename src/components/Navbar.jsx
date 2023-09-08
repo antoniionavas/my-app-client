@@ -37,7 +37,6 @@ function NavBar() {
                     <Nav.Link href="/list-users">Lista de Usuarios</Nav.Link>
                   </isAdmin>
                   <Nav.Link href="/my-profile">Mi Perfil</Nav.Link>
-                  <Nav.Link href="/:bandId/details/createOffer">Crear Oferta</Nav.Link>
                   <button className="LogOut btn" onClick={handleLogOut}>
                     Cerrar Sesión
                   </button>
